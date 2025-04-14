@@ -58,7 +58,7 @@ export default function Navbar() {
 
       <nav className="bg-accent text-accent-foreground p-4 shadow-md">
         <div className="container mx-auto flex items-center justify-around">
-          <Link href="/" className="text-sm">
+          <Link href="/#categories" className="text-sm">
             Home
           </Link>
           <Link href="/postage" className="text-sm">
