@@ -55,7 +55,29 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
+
+      <nav className="bg-accent text-accent-foreground p-4 shadow-md">
+        <div className="container mx-auto flex items-center justify-around">
+          <Link href="/" className="text-sm">
+            Home
+          </Link>
+          <Link href="/postage" className="text-sm">
+            Postage & Delivery
+          </Link>
+          <Link href="/terms" className="text-sm">
+            T&Cs
+          </Link>
+          <Link href="/sds" className="text-sm">
+            SDS
+          </Link>
+          <Link href="/about" className="text-sm">
+            About
+          </Link>
+          <Link href="/contact" className="text-sm">
+            Contact
+          </Link>
+        </div>
+      </nav>
     </>
   );
 }
-
