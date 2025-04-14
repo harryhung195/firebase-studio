@@ -29,8 +29,8 @@ export default function ShoppingCart() {
         <p>Your shopping cart is currently empty.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {cart.map(product => (
-            <Card key={product.id}>
+          {cart.map((product, index) => (
+            <Card key={product.id || index}>
               <CardHeader>
                 <CardTitle>{product.name}</CardTitle>
                 <CardDescription>Price: ${product.price}</CardDescription>
@@ -53,3 +53,4 @@ export default function ShoppingCart() {
     </div>
   );
 }
+
