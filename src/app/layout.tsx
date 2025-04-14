@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import {Geist, Geist_Mono} from 'next/font/google';
 import './globals.css';
+import Link from 'next/link';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,6 +27,122 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
+        <footer className="bg-secondary text-secondary-foreground p-8 mt-16">
+          <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div>
+              <h3 className="font-bold text-lg mb-4">Navigate</h3>
+              <ul className="list-none pl-0">
+                <li className="mb-2">
+                  <Link href="/nail-education" className="hover:text-accent">
+                    Nail Education &amp; Training
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/about" className="hover:text-accent">
+                    About
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/covid-delay" className="hover:text-accent">
+                    COVID-DELAY
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/terms" className="hover:text-accent">
+                    Terms and Conditions
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/electrical-maintenance" className="hover:text-accent">
+                    Electrical Maintenance
+                  </Link>
+                </li>
+                <li className="mb-2">
+                    <Link href="/afterpay" className="hover:text-accent">
+                        Afterpay
+                    </Link>
+                </li>
+                <li className="mb-2">
+                    <Link href="/zippay" className="hover:text-accent">
+                        zipPay
+                    </Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/contact" className="hover:text-accent">
+                    Contact Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/sitemap" className="hover:text-accent">
+                    Sitemap
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-bold text-lg mb-4">Popular Brands</h3>
+              <ul className="list-none pl-0">
+                <li className="mb-2">
+                  <Link href="/brands/tns" className="hover:text-accent">
+                    TNS
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/brands/luxio" className="hover:text-accent">
+                    Luxio
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/brands/moxie" className="hover:text-accent">
+                    Moxie
+                  </Link>
+                </li>
+                 <li className="mb-2">
+                  <Link href="/brands/lacit" className="hover:text-accent">
+                    Lac It!
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="/brands/tnsquickdip" className="hover:text-accent">
+                    TNS Quick Dip
+                  </Link>
+                </li>
+                 <li className="mb-2">
+                  <Link href="/brands/pamperplates" className="hover:text-accent">
+                    Pamper Plates
+                  </Link>
+                </li>
+                 <li className="mb-2">
+                  <Link href="/brands/hanami" className="hover:text-accent">
+                    Hanami
+                  </Link>
+                </li>
+                 <li className="mb-2">
+                  <Link href="/brands/envogue" className="hover:text-accent">
+                    en Vogue
+                  </Link>
+                </li>
+                 <li className="mb-2">
+                  <Link href="/brands/preciosa" className="hover:text-accent">
+                    Preciosa
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/brands/all" className="hover:text-accent">
+                    View All
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div className="md:col-span-2">
+              <p className="text-sm">
+                © 2024 The Nail Shop. All rights reserved.
+              </p>
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   );
