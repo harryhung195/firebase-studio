@@ -149,14 +149,14 @@ export default function RootLayout({
                 <div className="flex items-center space-x-4 mb-4">
                      <Link href="/mastercard" className="hover:text-accent">
                       <img
-                        src="https://picsum.photos/50/30"
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/2560px-Mastercard-logo.svg.png"
                         alt="Mastercard"
                         className="w-12 h-7 mr-2 rounded-md"
                       />
                     </Link>
                     <Link href="/paypal" className="hover:text-accent">
                          <img
-                            src="https://picsum.photos/50/30"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal_logo_2005.svg/2560px-PayPal_logo_2005.svg.png"
                             alt="Paypal"
                             className="w-12 h-7 mr-2 rounded-md"
                           />
@@ -172,5 +172,4 @@ export default function RootLayout({
     </html>
   );
 }
-
 
