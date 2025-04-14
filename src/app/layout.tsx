@@ -2,6 +2,8 @@ import type {Metadata} from 'next';
 import {Geist, Geist_Mono} from 'next/font/google';
 import './globals.css';
 import Link from 'next/link';
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -135,6 +137,13 @@ export default function RootLayout({
                 </li>
               </ul>
             </div>
+            <div>
+                <h3 className="font-bold text-lg mb-4">Subscribe to our newsletter</h3>
+                <div>
+                    <Input type="email" placeholder="Your email address" className="w-full mb-2"/>
+                    <Button className="w-full">Subscribe</Button>
+                </div>
+            </div>
 
             <div className="md:col-span-2">
                 <div className="flex items-center space-x-4 mb-4">
@@ -163,4 +172,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 
