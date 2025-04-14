@@ -138,11 +138,19 @@ export default function RootLayout({
 
             <div className="md:col-span-2">
                 <div className="flex items-center space-x-4 mb-4">
-                    <Link href="/mastercard" className="hover:text-accent">
-                    Mastercard
+                     <Link href="/mastercard" className="hover:text-accent">
+                      <img
+                        src="https://picsum.photos/50/30"
+                        alt="Mastercard"
+                        className="w-12 h-7 mr-2 rounded-md"
+                      />
                     </Link>
                     <Link href="/paypal" className="hover:text-accent">
-                        PayPal
+                         <img
+                            src="https://picsum.photos/50/30"
+                            alt="Paypal"
+                            className="w-12 h-7 mr-2 rounded-md"
+                          />
                     </Link>
                 </div>
               <p className="text-sm">
