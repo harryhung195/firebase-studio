@@ -75,3 +75,4 @@ export default function NewSupplies() {
     </div>
   );
 }
+
