@@ -4,6 +4,7 @@ import {useState} from 'react';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
+import { useRouter } from 'next/navigation';
 
 const products = [
   {id: 1, name: 'Nail Polish - Red', sku: 'NP123', price: 4.99, attributes: {color: 'Red', size: '15ml'}},
@@ -16,6 +17,7 @@ const products = [
 export default function Under5() {
   const [search, setSearch] = useState('');
   const [filteredProducts, setFilteredProducts] = useState(products);
+   const router = useRouter();
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
@@ -34,7 +36,7 @@ export default function Under5() {
   };
 
   const handleAddToCart = (product: any) => {
-    alert(`Added ${product.name} to cart!`);
+    router.push('/shopping-cart');
   };
 
   return (
