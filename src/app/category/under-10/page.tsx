@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
@@ -17,6 +17,21 @@ export default function Under10() {
   const [search, setSearch] = useState('');
   const [filteredProducts, setFilteredProducts] = useState(products);
    const router = useRouter();
+    const [cart, setCart] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Load cart data from local storage on component mount
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      setCart(JSON.parse(storedCart));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Update local storage whenever the cart changes
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
+
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
@@ -35,8 +50,10 @@ export default function Under10() {
   };
 
   const handleAddToCart = (product: any) => {
-    router.push('/shopping-cart');
+    // Add the selected product to the cart
+    setCart([...cart, product]);
   };
+
 
   return (
     <div className="container mx-auto py-8">
@@ -72,8 +89,10 @@ export default function Under10() {
             </CardContent>
           </Card>
         ))}
+         <Button onClick={() => router.push('/shopping-cart')}>Go to Shopping Cart</Button>
       </div>
     </div>
   );
 }
+
 
