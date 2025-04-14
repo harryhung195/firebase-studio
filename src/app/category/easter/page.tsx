@@ -59,6 +59,11 @@ export default function Easter() {
               <CardDescription>Price: ${product.price}</CardDescription>
             </CardHeader>
             <CardContent>
+            <img
+                src={`https://picsum.photos/200/150?random=${product.id}`}
+                alt={product.name}
+                className="w-full h-32 object-cover mb-4 rounded-md"
+              />
               <p>SKU: {product.sku}</p>
               <p>Colors: {product.attributes.colors}</p>
               <p>Design: {product.attributes.design}</p>

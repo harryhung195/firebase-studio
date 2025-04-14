@@ -59,6 +59,11 @@ export default function Clearance() {
               <CardDescription>Price: ${product.price}</CardDescription>
             </CardHeader>
             <CardContent>
+              <img
+                src={`https://picsum.photos/200/150?random=${product.id}`}
+                alt={product.name}
+                className="w-full h-32 object-cover mb-4 rounded-md"
+              />
               <p>SKU: {product.sku}</p>
               <p>Color: {product.attributes.color}</p>
               <p>Type: {product.attributes.type}</p>
