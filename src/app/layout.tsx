@@ -137,6 +137,14 @@ export default function RootLayout({
             </div>
 
             <div className="md:col-span-2">
+                <div className="flex items-center space-x-4 mb-4">
+                    <Link href="/mastercard" className="hover:text-accent">
+                    Mastercard
+                    </Link>
+                    <Link href="/paypal" className="hover:text-accent">
+                        PayPal
+                    </Link>
+                </div>
               <p className="text-sm">
                 © 2024 The Nail Shop. All rights reserved.
               </p>
@@ -147,3 +155,4 @@ export default function RootLayout({
     </html>
   );
 }
+
