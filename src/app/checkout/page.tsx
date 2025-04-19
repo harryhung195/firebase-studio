@@ -64,6 +64,11 @@ export default function Checkout() {
                 </CardContent>
               </Card>
             ))}
+             <div className="col-span-1 md:col-span-2 lg:col-span-3 mt-4">
+              <Card>
+                <CardContent className="text-lg font-bold">Total Price: ${totalPrice.toFixed(2)}</CardContent>
+              </Card>
+            </div>
           </div>
 
             <div className="mb-4">
@@ -88,7 +93,7 @@ export default function Checkout() {
 
            <div className="flex justify-between mt-4">
             <Button onClick={() => router.push('/shopping-cart')}>Back to Shopping Cart</Button>
-            <Button  onClick={() => router.push('/')}>Continue to Payment</Button>
+            <Button  onClick={() => router.push('/payment')}>Pay Now</Button>
           </div>
         </div>
       )}
