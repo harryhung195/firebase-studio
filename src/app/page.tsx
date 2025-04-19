@@ -1,5 +1,7 @@
 'use client';
 
+// This is the home page
+
 import Navbar from './components/Navbar';
 import Link from 'next/link';
 
