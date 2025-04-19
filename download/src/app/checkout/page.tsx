@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
+import {Input} from '@/components/ui/input';
 
 export default function Checkout() {
   const [cart, setCart] = useState<any[]>([]);
@@ -64,10 +65,31 @@ export default function Checkout() {
               </Card>
             ))}
           </div>
-           <Button onClick={() => router.push('/shopping-cart')}>Back to Shopping Cart</Button>
-            <div className="mt-4 text-xl font-bold">
-                Total Price: ${totalPrice.toFixed(2)}
+
+            <div className="mb-4">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                <Input type="text" id="name" placeholder="Enter your name" className="mt-1" />
             </div>
+
+            <div className="mb-4">
+                <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
+                <Input type="text" id="address" placeholder="Enter your address" className="mt-1" />
+            </div>
+
+            <div className="mb-4">
+                <label htmlFor="postcode" className="block text-sm font-medium text-gray-700">Postcode</label>
+                <Input type="text" id="postcode" placeholder="Enter your postcode" className="mt-1" />
+            </div>
+
+            <div className="mb-4">
+                <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700">Card Number</label>
+                <Input type="text" id="cardNumber" placeholder="Enter your card number" className="mt-1" />
+            </div>
+
+           <div className="flex justify-between mt-4">
+            <Button onClick={() => router.push('/shopping-cart')}>Back to Shopping Cart</Button>
+            <Button variant="destructive" onClick={() => router.push('/')}>Cancel Order</Button>
+          </div>
         </div>
       )}
     </div>
