@@ -58,6 +58,7 @@ export default function ShoppingCart() {
                   {product.attributes.quantity && <p>Quantity: {product.attributes.quantity}</p>}
                   {product.attributes.tools && <p>Tools: {product.attributes.tools}</p>}
                   <Button onClick={() => handleRemoveFromCart(product.id)}>Remove from Cart</Button>
+                   <Button onClick={() => router.push('/checkout')}>Checkout</Button>
                 </CardContent>
               </Card>
             ))}
