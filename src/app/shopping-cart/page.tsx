@@ -1,5 +1,3 @@
-'use client';
-
 import {useState, useEffect} from 'react';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
@@ -29,9 +27,13 @@ export default function ShoppingCart() {
   };
 
   const incrementQuantity = (productId: number) => {
-    const updatedCart = cart.map(item =>
-      item.id === productId ? {...item, quantity: (item.quantity || 1) + 1} : item
-    );
+    const updatedCart = cart.map(item => {
+      if (item.id === productId) {
+        const newQuantity = (item.quantity || 1) + 1;
+        return {...item, quantity: newQuantity }; // Ensure quantity doesn't go below 1
+      }
+      return item;
+    });
     setCart(updatedCart);
     updateCartInLocalStorage(updatedCart);
   };
@@ -47,6 +49,14 @@ export default function ShoppingCart() {
     setCart(updatedCart);
     updateCartInLocalStorage(updatedCart);
   };
+
+
+  const calculateTotalPrice = () => {
+    return cart.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0);
+  };
+
+  const totalPrice = calculateTotalPrice();
+
 
   return (
     <div className="container mx-auto py-8">
@@ -91,6 +101,9 @@ export default function ShoppingCart() {
                 </CardContent>
               </Card>
             ))}
+          </div>
+          <div className="mt-4 text-xl font-bold">
+            Total Price: ${totalPrice.toFixed(2)}
           </div>
           <Button onClick={() => router.push('/checkout')}>Checkout</Button>
         </div>
