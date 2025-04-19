@@ -1,9 +1,11 @@
+'use client';
+
 import {useState, useEffect} from 'react';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
 
-export default function ShoppingCart() {
+export default function Checkout() {
   const [cart, setCart] = useState<any[]>([]);
   const router = useRouter();
 
@@ -15,51 +17,20 @@ export default function ShoppingCart() {
     }
   }, []);
 
-  const updateCartInLocalStorage = (updatedCart: any[]) => {
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-  };
-
-  const handleRemoveFromCart = (productId: number) => {
-    // Remove the item from the cart
-    const updatedCart = cart.filter(item => item.id !== productId);
-    setCart(updatedCart);
-    updateCartInLocalStorage(updatedCart);
-  };
-
-  const incrementQuantity = (productId: number) => {
-    const updatedCart = cart.map(item =>
-      item.id === productId ? {...item, quantity: (item.quantity || 1) + 1} : item
-    );
-    setCart(updatedCart);
-    updateCartInLocalStorage(updatedCart);
-  };
-
-  const decrementQuantity = (productId: number) => {
-    const updatedCart = cart.map(item => {
-      if (item.id === productId) {
-        const newQuantity = (item.quantity || 1) - 1;
-        return {...item, quantity: newQuantity > 0 ? newQuantity : 1}; // Ensure quantity doesn't go below 1
-      }
-      return item;
-    });
-    setCart(updatedCart);
-    updateCartInLocalStorage(updatedCart);
-  };
-
   const calculateTotalPrice = () => {
     return cart.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0);
   };
 
   const totalPrice = calculateTotalPrice();
 
-
   return (
     <div className="container mx-auto py-8">
-      <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
+      <h1 className="text-2xl font-bold mb-4">Checkout</h1>
       {cart.length === 0 ? (
         <p>Your shopping cart is currently empty.</p>
       ) : (
         <div>
+          <h2 className="text-xl font-bold mb-4">Summary of Items:</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {cart.map((product, index) => (
               <Card key={product.id || index}>
@@ -87,11 +58,8 @@ export default function ShoppingCart() {
                   {product.attributes.quantity && <p>Quantity: {product.attributes.quantity}</p>}
                   {product.attributes.tools && <p>Tools: {product.attributes.tools}</p>}
                    <div className="flex items-center space-x-2 mb-4">
-                    <Button size="sm" onClick={() => decrementQuantity(product.id)}>-</Button>
                     <span>Quantity: {product.quantity || 1}</span>
-                    <Button size="sm" onClick={() => incrementQuantity(product.id)}>+</Button>
                   </div>
-                  <Button onClick={() => handleRemoveFromCart(product.id)}>Remove from Cart</Button>
                 </CardContent>
               </Card>
             ))}
@@ -99,7 +67,7 @@ export default function ShoppingCart() {
           <div className="mt-4 text-xl font-bold">
             Total Price: ${totalPrice.toFixed(2)}
           </div>
-          <Button onClick={() => router.push('/checkout')}>Checkout</Button>
+           <Button onClick={() => router.push('/shopping-cart')}>Back to Shopping Cart</Button>
         </div>
       )}
     </div>
