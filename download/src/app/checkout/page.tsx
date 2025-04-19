@@ -64,12 +64,13 @@ export default function Checkout() {
               </Card>
             ))}
           </div>
-          <div className="mt-4 text-xl font-bold">
-            Total Price: ${totalPrice.toFixed(2)}
-          </div>
            <Button onClick={() => router.push('/shopping-cart')}>Back to Shopping Cart</Button>
+            <div className="mt-4 text-xl font-bold">
+                Total Price: ${totalPrice.toFixed(2)}
+            </div>
         </div>
       )}
     </div>
   );
 }
+

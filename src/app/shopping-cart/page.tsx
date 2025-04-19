@@ -87,7 +87,7 @@ export default function ShoppingCart() {
                     <Button size="sm" onClick={() => incrementQuantity(product.id)}>+</Button>
                   </div>
                   <Button onClick={() => handleRemoveFromCart(product.id)}>Remove from Cart</Button>
-                   <Button onClick={() => router.push('/checkout')}>Checkout</Button>
+                  
                 </CardContent>
               </Card>
             ))}
