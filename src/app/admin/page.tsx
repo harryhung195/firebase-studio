@@ -15,6 +15,9 @@ export default function AdminPanel() {
         <Link href="/admin/orders">
           <Button>Manage Orders</Button>
         </Link>
+         <Link href="/admin/users">
+          <Button>Manage Users</Button>
+        </Link>
       </div>
     </div>
   );
