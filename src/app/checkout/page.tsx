@@ -64,10 +64,12 @@ export default function Checkout() {
               </Card>
             ))}
           </div>
-           <Button onClick={() => router.push('/shopping-cart')}>Back to Shopping Cart</Button>
+           <div className="flex justify-between mt-4">
+            <Button onClick={() => router.push('/shopping-cart')}>Back to Shopping Cart</Button>
+            <Button>Continue to Payment</Button>
+          </div>
         </div>
       )}
     </div>
   );
 }
-
