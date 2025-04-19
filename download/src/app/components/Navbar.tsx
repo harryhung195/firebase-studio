@@ -4,7 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 
-export default function Navbar() {
+interface NavbarProps {
+  cartCount: number;
+}
+
+export default function Navbar({ cartCount }: NavbarProps) {
   return (
     <>
       <nav className="bg-primary text-primary-foreground p-4 shadow-md">
@@ -49,7 +53,7 @@ export default function Navbar() {
             <Link href="/shopping-cart">
               <Button variant="ghost" size="sm">
                 <Icons.shoppingCart className="mr-2 h-4 w-4" />
-                Shopping Cart
+                Shopping Cart ({cartCount})
               </Button>
             </Link>
           </div>
@@ -81,3 +85,4 @@ export default function Navbar() {
     </>
   );
 }
+

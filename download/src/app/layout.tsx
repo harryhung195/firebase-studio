@@ -1,9 +1,12 @@
+
 import type {Metadata} from 'next';
 import {Geist, Geist_Mono} from 'next/font/google';
 import './globals.css';
 import Link from 'next/link';
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
+import Navbar from './components/Navbar';
+import { useState, useEffect } from 'react';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -25,9 +28,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    // Load cart data from local storage on component mount
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      setCartCount(JSON.parse(storedCart).length);
+    }
+  }, []);
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Navbar cartCount={cartCount} />
         {children}
         <footer className="bg-secondary text-secondary-foreground p-8 mt-16">
           <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

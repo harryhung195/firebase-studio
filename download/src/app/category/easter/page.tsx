@@ -5,6 +5,7 @@ import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
+import Navbar from '@/app/components/Navbar';
 
 const products = [
   {id: 13, name: 'Pastel Nail Polish Set', sku: 'EST001', price: 7.99, attributes: {colors: 'Pink, Blue, Yellow', size: '3x10ml'}},
@@ -17,18 +18,21 @@ export default function Easter() {
   const [filteredProducts, setFilteredProducts] = useState(products);
    const router = useRouter();
     const [cart, setCart] = useState<any[]>([]);
+    const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     // Load cart data from local storage on component mount
     const storedCart = localStorage.getItem('cart');
     if (storedCart) {
       setCart(JSON.parse(storedCart));
+      setCartCount(JSON.parse(storedCart).length);
     }
   }, []);
 
   useEffect(() => {
     // Update local storage whenever the cart changes
     localStorage.setItem('cart', JSON.stringify(cart));
+    setCartCount(cart.length);
   }, [cart]);
 
 
@@ -54,6 +58,8 @@ export default function Easter() {
   };
 
   return (
+    <div>
+        <Navbar cartCount={cartCount} />
     <div className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-4">Easter Nail Products</h1>
 
@@ -90,7 +96,7 @@ export default function Easter() {
          <Button onClick={() => router.push('/shopping-cart')}>Go to Shopping Cart</Button>
       </div>
     </div>
+     </div>
   );
 }
-
 

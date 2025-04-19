@@ -5,6 +5,7 @@ import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
+import Navbar from '@/app/components/Navbar';
 
 const products = [
   {id: 22, name: 'Acrylic Powder - Clear', sku: 'ALP001', price: 19.99, attributes: {color: 'Clear', size: '100g'}},
@@ -17,18 +18,21 @@ export default function AcrylicLiquidsPowders() {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [cart, setCart] = useState<any[]>([]);
   const router = useRouter();
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     // Load cart data from local storage on component mount
     const storedCart = localStorage.getItem('cart');
     if (storedCart) {
       setCart(JSON.parse(storedCart));
+       setCartCount(JSON.parse(storedCart).length);
     }
   }, []);
 
   useEffect(() => {
     // Update local storage whenever the cart changes
     localStorage.setItem('cart', JSON.stringify(cart));
+        setCartCount(cart.length);
   }, [cart]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,6 +57,8 @@ export default function AcrylicLiquidsPowders() {
   };
 
   return (
+    <div>
+        <Navbar cartCount={cartCount} />
     <div className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-4">Acrylic Liquids &amp; Powders</h1>
 
@@ -89,7 +95,7 @@ export default function AcrylicLiquidsPowders() {
          <Button onClick={() => router.push('/shopping-cart')}>Go to Shopping Cart</Button>
       </div>
     </div>
+     </div>
   );
 }
-
 

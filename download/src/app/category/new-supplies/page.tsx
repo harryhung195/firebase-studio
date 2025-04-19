@@ -5,6 +5,7 @@ import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
+import Navbar from '@/app/components/Navbar';
 
 const products = [
   {id: 16, name: 'UV Nail Lamp - New Model', sku: 'NS001', price: 29.99, attributes: {power: '48W', timer: '30/60/90s'}},
@@ -17,18 +18,21 @@ export default function NewSupplies() {
   const [filteredProducts, setFilteredProducts] = useState(products);
    const router = useRouter();
     const [cart, setCart] = useState<any[]>([]);
+      const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     // Load cart data from local storage on component mount
     const storedCart = localStorage.getItem('cart');
     if (storedCart) {
       setCart(JSON.parse(storedCart));
+       setCartCount(JSON.parse(storedCart).length);
     }
   }, []);
 
   useEffect(() => {
     // Update local storage whenever the cart changes
     localStorage.setItem('cart', JSON.stringify(cart));
+       setCartCount(cart.length);
   }, [cart]);
 
 
@@ -54,6 +58,8 @@ export default function NewSupplies() {
   };
 
   return (
+      <div>
+            <Navbar cartCount={cartCount} />
     <div className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-4">New Nail Salon Supplies</h1>
 
@@ -90,7 +96,7 @@ export default function NewSupplies() {
          <Button onClick={() => router.push('/shopping-cart')}>Go to Shopping Cart</Button>
       </div>
     </div>
+       </div>
   );
 }
-
 
