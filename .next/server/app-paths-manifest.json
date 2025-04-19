@@ -1,5 +1,8 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
+  "/admin/orders/page": "app/admin/orders/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/products/page": "app/admin/products/page.js",
   "/category/acrylic-liquids-powders/page": "app/category/acrylic-liquids-powders/page.js",
   "/category/under-5/page": "app/category/under-5/page.js",
   "/contact/page": "app/contact/page.js",
