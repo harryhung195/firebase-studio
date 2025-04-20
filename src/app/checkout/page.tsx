@@ -129,6 +129,7 @@ export default function Checkout() {
                     formData={formData}
                     totalPrice={totalPrice}
                     handleChange={handleChange}
+                    cart={cart} // Pass the cart to PaymentSection
                   />
                 </Elements>
               ) : (
@@ -146,12 +147,14 @@ interface PaymentSectionProps {
   formData: { name: string; address: string; postcode: string };
   totalPrice: number;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  cart: any[]; // Receive cart data
 }
 
 const PaymentSection: React.FC<PaymentSectionProps> = ({
   formData,
   totalPrice,
   handleChange,
+  cart
 }) => {
   const router = useRouter();
   const stripe = useStripe();
@@ -218,6 +221,16 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
         router.push('/payment/error');
       } else if (paymentIntent && paymentIntent.status === 'succeeded') {
         // Payment has succeeded
+        const orderDetails = {
+          userId: localStorage.getItem('username'),
+          email: localStorage.getItem('username') + "@example.com",
+          amount: totalPrice,
+          paymentId: paymentIntent.id,
+          status: 'succeeded',
+          cartItems: cart
+        };
+        localStorage.setItem('orderDetails', JSON.stringify(orderDetails));
+
         localStorage.removeItem('cart');
         window.location.replace('/payment/success'); // Redirect to success page
       } else {
