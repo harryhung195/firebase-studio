@@ -46,11 +46,11 @@ export default function Checkout() {
       try {
         const clientSecret = await createPaymentIntent(totalPrice);
         setStripeClientSecret(clientSecret);
-      } catch (error) {
+      } catch (error: any) {
         console.error("Failed to fetch client secret:", error);
         toast({
           title: "Payment Error!",
-          description: "Failed to initiate payment process.",
+          description: "Failed to initiate payment process: " + error.message,
           variant: "destructive",
         });
       } finally {
@@ -192,7 +192,7 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
     setPaymentLoading(true);
 
     try {
-      const { error, paymentIntent } = await stripe.confirmPayment({
+      const {error} = await stripe.confirmPayment({
         elements,
         confirmParams: {
           return_url: `${window.location.origin}/payment/success`,
@@ -206,25 +206,20 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
             },
           },
         },
-        redirect: "if_required"
       });
 
       if (error) {
-        console.error("Payment failed:", error.message);
+        console.error("Payment failed:", error);
         toast({
           title: "Payment Failed",
-          description: error.message || "An error occurred during payment.",
+          description: error.message || "Please select a payment method to pay with.",
           variant: "destructive",
         });
         router.push('/payment/error');
-      } else if (paymentIntent && paymentIntent.status === "succeeded") {
+      } else {
         // Payment has succeeded
-        console.log("Payment succeeded:", paymentIntent);
         localStorage.removeItem('cart');
         router.push('/payment/success');
-      } else {
-        // Handle other possible statuses like requires_action
-        console.log("Payment requires action:", paymentIntent);
       }
     } catch (apiError: any) {
       console.error("API error during payment:", apiError);
