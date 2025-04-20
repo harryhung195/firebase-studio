@@ -128,12 +128,12 @@ async function getUsers() {
     try {
         const response = await fetch(baseUrl);
         if (!response.ok) {
-            throw new Error(`Failed to fetch users: ${response.status}`);
+            throw new Error(`Failed to fetch users: ${response.statusText}`);
         }
         return await response.json();
     } catch (error) {
         console.error('Error fetching users:', error);
-        throw new Error('Failed to fetch users');
+        throw new Error(`Failed to fetch users: ${error.message}`);
     }
 }
 async function createUser(user) {

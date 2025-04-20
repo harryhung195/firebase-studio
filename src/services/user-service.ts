@@ -6,12 +6,12 @@ export async function getUsers(): Promise<User[]> {
   try {
     const response = await fetch(baseUrl);
     if (!response.ok) {
-      throw new Error(`Failed to fetch users: ${response.status}`);
+      throw new Error(`Failed to fetch users: ${response.statusText}`);
     }
     return await response.json() as User[];
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching users:', error);
-    throw new Error('Failed to fetch users');
+    throw new Error(`Failed to fetch users: ${error.message}`);
   }
 }
 
