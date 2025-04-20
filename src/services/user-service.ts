@@ -73,3 +73,4 @@ export async function loginUser(email: string, password?: string): Promise<User>
   }
   return await response.json() as User;
 }
+
