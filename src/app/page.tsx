@@ -4,11 +4,23 @@
 
 import Navbar from './components/Navbar';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    // Load cart data from local storage on component mount
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      setCartCount(JSON.parse(storedCart).length);
+    }
+  }, []);
+
   return (
     <div>
-      <Navbar />
+      <Navbar cartCount={cartCount} />
       <section className="py-12" id="categories">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold mb-8">Categories</h2>
