@@ -7,16 +7,16 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/compo
 import { useRouter } from 'next/navigation';
 
 const products = [
-  {id: 10, name: 'Nail Polish - Discounted Red', sku: 'CLR001', price: 2.49, attributes: {color: 'Red', size: '10ml'}},
-  {id: 11, name: 'Nail File Set', sku: 'CLR002', price: 4.99, attributes: {type: 'Assorted Grit', quantity: '5 files'}},
-  {id: 12, name: 'Toe Separators', sku: 'CLR003', price: 1.99, attributes: {material: 'Foam', quantity: '2 pieces'}},
+  {id: 22, name: 'Acrylic Powder - Clear', sku: 'ALP001', price: 19.99, attributes: {color: 'Clear', size: '100g'}},
+  {id: 23, name: 'Acrylic Liquid Monomer', sku: 'ALM002', price: 15.49, attributes: {size: '120ml', odor: 'Low Odor'}},
+  {id: 24, name: 'Acrylic Brush Set', sku: 'ABS003', price: 24.99, attributes: {brushes: '3 brushes', material: 'Kolinsky Hair'}},
 ];
 
-export default function Clearance() {
+export default function AcrylicLiquidsPowders() {
   const [search, setSearch] = useState('');
   const [filteredProducts, setFilteredProducts] = useState(products);
-   const router = useRouter();
-    const [cart, setCart] = useState<any[]>([]);
+  const [cart, setCart] = useState<any[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     // Load cart data from local storage on component mount
@@ -30,7 +30,6 @@ export default function Clearance() {
     // Update local storage whenever the cart changes
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
-
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
@@ -48,15 +47,14 @@ export default function Clearance() {
     setFilteredProducts(filtered);
   };
 
-  const handleAddToCart = (product: any) =>
+  const handleAddToCart = (product: any) => {
     // Add the selected product to the cart
     setCart([...cart, product]);
   };
 
-
   return (
     <div className="container mx-auto py-8">
-      <h1 className="text-2xl font-bold mb-4">Clearance Sale</h1>
+      <h1 className="text-2xl font-bold mb-4">Acrylic Liquids &amp; Powders</h1>
 
       <div className="mb-4">
         <Input
@@ -76,14 +74,14 @@ export default function Clearance() {
               <CardDescription>Price: ${product.price}</CardDescription>
             </CardHeader>
             <CardContent>
-              <img
+            <img
                 src={`https://picsum.photos/200/150?random=${product.id}`}
                 alt={product.name}
                 className="w-full h-32 object-cover mb-4 rounded-md"
               />
               <p>SKU: {product.sku}</p>
               <p>Color: {product.attributes.color}</p>
-              <p>Type: {product.attributes.type}</p>
+              <p>Size: {product.attributes.size}</p>
               <Button onClick={() => handleAddToCart(product)}>Add to Cart</Button>
             </CardContent>
           </Card>
