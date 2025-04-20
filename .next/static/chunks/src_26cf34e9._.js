@@ -188,6 +188,9 @@ async function registerUser(user) {
             email: user.email
         })
     });
+    if (!response.ok) {
+        throw new Error(`Failed to register users: ${response.statusText}`);
+    }
     return await response.json();
 }
 async function updateUser(user) {

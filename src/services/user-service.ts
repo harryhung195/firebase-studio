@@ -31,6 +31,9 @@ export async function createUser(user: Omit<User, 'id'>): Promise<User> {
 
 export async function registerUser(user: Omit<RegisterUser, 'password' | 'role'>): Promise<User> {
   const response = await fetch(baseUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: user.name, email: user.email }) });
+  if (!response.ok){
+    throw new Error(`Failed to register users: ${response.statusText}`);
+  }
   return await response.json() as User;
 }
 
@@ -56,7 +59,7 @@ export async function updateUser(user: User): Promise<User> {
         if (!response.ok) {
             throw new Error(`Failed to delete user: ${response.status}`);
         }
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error deleting user:', error);
         throw new Error('Failed to delete user');
     }
@@ -73,4 +76,3 @@ export async function loginUser(email: string, password?: string): Promise<User>
   }
   return await response.json() as User;
 }
-
