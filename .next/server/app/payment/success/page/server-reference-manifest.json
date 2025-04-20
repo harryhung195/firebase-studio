@@ -1,4 +1,16 @@
 {
-  "node": {},
+  "node": {
+    "409040e3c2aa063389e342d64641db8454a6ffd373": {
+      "workers": {
+        "app/payment/success/page": {
+          "moduleId": "[project]/.next-internal/server/app/payment/success/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/services/order-service.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/payment/success/page": "action-browser"
+      }
+    }
+  },
   "edge": {}
 }
