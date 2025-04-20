@@ -8,6 +8,12 @@ import {Switch} from '@/components/ui/switch';
 import {Label} from '@/components/ui/label';
 import Link from 'next/link';
 
+const defaultServices = [
+  {id: 1, name: 'Gel Manicure', price: 45, duration: 45, category: 'Hands', technicianSpecialization: 'Nail Art'},
+  {id: 2, name: 'Pedicure', price: 60, duration: 60, category: 'Feet'},
+  {id: 3, name: 'Acrylic Nails', price: 75, duration: 90, category: 'Hands', technicianSpecialization: 'Acrylic Specialist'},
+];
+
 export default function AdminSettings() {
   const [salonName, setSalonName] = useState('The Nail Shop');
   const [address, setAddress] = useState('123 Main Street, Anytown');
@@ -16,6 +22,7 @@ export default function AdminSettings() {
   const [mondayHours, setMondayHours] = useState('10:00 AM - 6:00 PM');
   const [tuesdayClosed, setTuesdayClosed] = useState(true);
   const [wednesdayHours, setWednesdayHours] = useState('10:00 AM - 8:00 PM');
+  const [services, setServices] = useState(defaultServices);
 
   return (
     <div className="container mx-auto py-8">
@@ -102,7 +109,31 @@ export default function AdminSettings() {
 
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-2">Services &amp; Prices</h2>
-        {/* Implement service management UI here */}
+        <div className="overflow-x-auto">
+          <table className="w-full table-auto">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="px-4 py-2">Name</th>
+                <th className="px-4 py-2">Price</th>
+                <th className="px-4 py-2">Duration</th>
+                <th className="px-4 py-2">Category</th>
+                <th className="px-4 py-2">Technician Specialization</th>
+              </tr>
+            </thead>
+            <tbody>
+              {services.map(service => (
+                <tr key={service.id}>
+                  <td className="border px-4 py-2">{service.name}</td>
+                  <td className="border px-4 py-2">${service.price}</td>
+                  <td className="border px-4 py-2">{service.duration} min</td>
+                  <td className="border px-4 py-2">{service.category}</td>
+                  <td className="border px-4 py-2">{service.technicianSpecialization || '-'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <Button className="mt-4">+ Add New Service</Button>
       </section>
 
       <section className="mb-8">
@@ -136,4 +167,3 @@ export default function AdminSettings() {
     </div>
   );
 }
-
