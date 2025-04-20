@@ -8,3 +8,4 @@ export default function AdminTechnicians() {
     </div>
   );
 }
+

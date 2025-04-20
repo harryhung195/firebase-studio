@@ -2,7 +2,15 @@
 
 import {useState} from 'react';
 import {Button} from '@/components/ui/button';
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 const products = [
   {id: 1, name: 'Nail Polish - Red', sku: 'NP123', price: 4.99, attributes: {color: 'Red', size: '15ml'}},
@@ -23,27 +31,45 @@ export default function AdminProducts() {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-4">Manage Products</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {productList.map(product => (
-          <Card key={product.id}>
-            <CardHeader>
-              <CardTitle>{product.name}</CardTitle>
-              <CardDescription>Price: ${product.price}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <img
-                src={`https://picsum.photos/200/150?random=${product.id}`}
-                alt={product.name}
-                className="w-full h-32 object-cover mb-4 rounded-md"
-              />
-              <p>SKU: {product.sku}</p>
-              <p>Color: {product.attributes.color}</p>
-              <p>Size: {product.attributes.size}</p>
-              <Button onClick={() => handleDelete(product.id)}>Delete</Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+
+      <Table>
+        <TableCaption>A list of your products.
+        You can edit, add and delete to change!</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Product ID</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>SKU</TableHead>
+            <TableHead>Price</TableHead>
+            <TableHead>Attributes</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {productList.map((product) => (
+            <TableRow key={product.id}>
+              <TableCell className="font-medium">{product.id}</TableCell>
+              <TableCell>{product.name}</TableCell>
+              <TableCell>{product.sku}</TableCell>
+              <TableCell>${product.price}</TableCell>
+              <TableCell>
+                {Object.entries(product.attributes).map(([key, value]) => (
+                  <div key={key}>
+                    {key}: {value}
+                  </div>
+                ))}
+              </TableCell>
+              <TableCell className="text-right">
+                <Button size="sm">Edit</Button>
+                <Button variant="destructive" size="sm" onClick={() => handleDelete(product.id)}>
+                  Delete
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }
+
