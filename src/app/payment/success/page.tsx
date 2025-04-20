@@ -14,6 +14,7 @@ export default function PaymentSuccess() {
     const storedOrderDetails = localStorage.getItem('orderDetails');
     if (storedOrderDetails) {
       setOrderDetails(JSON.parse(storedOrderDetails));
+      saveOrderToDatabase(JSON.parse(storedOrderDetails)); // Call the function to save to the database
     } else {
       // If no order details are found, redirect to home
       router.push('/');
@@ -29,6 +30,31 @@ export default function PaymentSuccess() {
 
     return () => clearTimeout(timeoutId); // Cleanup timeout on unmount
   }, [router]);
+
+  // Simulate saving data to a database
+async function saveOrderToDatabase(orderDetails: any) {
+  try {
+    // Replace this with your actual database saving logic
+    // For example, using an API endpoint to save the data
+    const response = await fetch('/api/save-order', { // Replace with your API endpoint
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(orderDetails),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to save order: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log('Order saved successfully:', result);
+  } catch (error: any) {
+    console.error('Error saving order:', error);
+    // Handle error appropriately (e.g., show an error message to the user)
+  }
+}
 
   if (!orderDetails) {
     return (
@@ -93,3 +119,4 @@ export default function PaymentSuccess() {
     </div>
   );
 }
+
