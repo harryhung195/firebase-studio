@@ -192,7 +192,7 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
     setPaymentLoading(true);
 
     try {
-      const { error } = await stripe.confirmPayment({
+      const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
           return_url: `${window.location.origin}/payment/success`,
@@ -206,6 +206,7 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
             },
           },
         },
+        redirect: "if_required"
       });
 
       if (error) {
@@ -216,9 +217,14 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
           variant: "destructive",
         });
         router.push('/payment/error');
+      } else if (paymentIntent && paymentIntent.status === "succeeded") {
+        // Payment has succeeded
+        console.log("Payment succeeded:", paymentIntent);
+        localStorage.removeItem('cart');
+        router.push('/payment/success');
       } else {
-        // Payment has either succeeded or redirection is required
-        console.log("Payment flow initiated, waiting for completion or redirection.");
+        // Handle other possible statuses like requires_action
+        console.log("Payment requires action:", paymentIntent);
       }
     } catch (apiError: any) {
       console.error("API error during payment:", apiError);
