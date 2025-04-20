@@ -5,22 +5,27 @@ import {Input} from '@/components/ui/input';
 import {useState} from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from '@/hooks/use-toast';
+import { RegisterUser } from '@/types';
+import { registerUser } from '@/services/user-service';
 
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-   const router = useRouter();
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle registration logic here
-    localStorage.setItem('username', email.split('@')[0]);
-    router.push('/signin');
-    toast({
+    registerUser({ name, email })
+      .then(() => {
+        router.push('/signin');
+        toast({
           title: "Register Successful!",
-          description: "You have successfully register in.",
+          description: "You have successfully registered.",
         });
+      })
+      .catch((error) => {
+        toast({ title: "Registration Failed", description: error.message });
+      });
   };
 
   return (
@@ -51,19 +56,6 @@ export default function Register() {
             className="mt-1"
             value={email}
             onChange={e => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="mb-6">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-            Password
-          </label>
-          <Input
-            type="password"
-            id="password"
-            placeholder="Enter your password"
-            className="mt-1"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
           />
         </div>
         <Button type="submit">Register</Button>

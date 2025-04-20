@@ -5,6 +5,7 @@ import {Input} from '@/components/ui/input';
 import {useState} from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from '@/hooks/use-toast';
+import { loginUser } from '@/services/user-service';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -13,14 +14,16 @@ export default function SignIn() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Simulate successful sign-in
-    localStorage.setItem('username', email.split('@')[0]);
-    router.push('/');
-    toast({
-          title: "Sign In Successful!",
-          description: "You have successfully signed in.",
-        });
+    try {
+      await loginUser(email, password);
+      router.push('/');
+      toast({
+        title: "Sign In Successful!",
+        description: "You have successfully signed in.",
+      });
+    } catch (error: any) {
+      toast({ title: "Sign In Failed", description: error.message });
+    }
   };
 
   return (

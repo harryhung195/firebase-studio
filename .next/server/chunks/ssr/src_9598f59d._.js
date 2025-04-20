@@ -110,6 +110,91 @@ const TableCaption = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$projec
 TableCaption.displayName = "TableCaption";
 ;
 }}),
+"[project]/src/services/user-service.ts [app-ssr] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { g: global, __dirname } = __turbopack_context__;
+{
+__turbopack_context__.s({
+    "createUser": (()=>createUser),
+    "deleteUser": (()=>deleteUser),
+    "getUsers": (()=>getUsers),
+    "loginUser": (()=>loginUser),
+    "registerUser": (()=>registerUser),
+    "updateUser": (()=>updateUser)
+});
+const baseUrl = '/api/users';
+async function getUsers() {
+    const response = await fetch(baseUrl);
+    if (!response.ok) {
+        throw new Error('Failed to fetch users');
+    }
+    return await response.json();
+}
+async function createUser(user) {
+    const response = await fetch(baseUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    });
+    if (!response.ok) {
+        throw new Error('Failed to create user');
+    }
+    return await response.json();
+}
+async function registerUser(user) {
+    const response = await fetch(baseUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: user.name,
+            email: user.email
+        })
+    });
+    return await response.json();
+}
+async function updateUser(user) {
+    const response = await fetch(`${baseUrl}/${user.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    });
+    if (!response.ok) {
+        throw new Error('Failed to update user');
+    }
+    return await response.json();
+}
+async function deleteUser(id) {
+    const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'DELETE'
+    });
+    if (!response.ok) {
+        throw new Error('Failed to delete user');
+    }
+}
+async function loginUser(email, password) {
+    const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email,
+            password
+        })
+    });
+    if (!response.ok) {
+        throw new Error('Invalid credentials');
+    }
+    return await response.json();
+}
+}}),
 "[project]/src/app/admin/users/page.tsx [app-ssr] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
@@ -122,16 +207,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/table.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
-(()=>{
-    const e = new Error("Cannot find module '@/services/user-service'");
-    e.code = 'MODULE_NOT_FOUND';
-    throw e;
-})();
-(()=>{
-    const e = new Error("Cannot find module '@radix-ui/react-icons'");
-    e.code = 'MODULE_NOT_FOUND';
-    throw e;
-})();
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$user$2d$service$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/services/user-service.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$icons$2f$dist$2f$react$2d$icons$2e$esm$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@radix-ui/react-icons/dist/react-icons.esm.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-ssr] (ecmascript)");
 'use client';
 ;
@@ -152,7 +229,7 @@ function AdminUsers() {
         setLoading(true);
         setError(null);
         try {
-            const usersData = await getUsers();
+            const usersData = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$user$2d$service$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getUsers"])();
             setUsers(usersData);
         } catch (err) {
             setError(err.message || 'Failed to fetch users');
@@ -163,7 +240,7 @@ function AdminUsers() {
     const handleDeleteUser = async (userId)=>{
         if (confirm('Are you sure you want to delete this user?')) {
             try {
-                await deleteUser(userId);
+                await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$user$2d$service$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["deleteUser"])(userId);
                 fetchUsers(); // Refresh the user list after deletion
             } catch (err) {
                 setError(err.message || 'Failed to delete user');
@@ -334,7 +411,7 @@ function AdminUsers() {
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
                                                         variant: "outline",
                                                         size: "icon",
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Pencil1Icon, {
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$icons$2f$dist$2f$react$2d$icons$2e$esm$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Pencil1Icon"], {
                                                             className: "h-4 w-4"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/users/page.tsx",
@@ -355,7 +432,7 @@ function AdminUsers() {
                                                     variant: "outline",
                                                     size: "icon",
                                                     onClick: ()=>handleDeleteUser(user.id),
-                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(TrashIcon, {
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$icons$2f$dist$2f$react$2d$icons$2e$esm$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TrashIcon"], {
                                                         className: "h-4 w-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/users/page.tsx",
@@ -406,4 +483,4 @@ function AdminUsers() {
 
 };
 
-//# sourceMappingURL=src_e3f6cad3._.js.map
+//# sourceMappingURL=src_9598f59d._.js.map
