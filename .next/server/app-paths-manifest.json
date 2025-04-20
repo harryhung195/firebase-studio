@@ -1,6 +1,13 @@
 {
+  "/admin/orders/page": "app/admin/orders/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/products/page": "app/admin/products/page.js",
+  "/category/new-supplies/page": "app/category/new-supplies/page.js",
   "/checkout/page": "app/checkout/page.js",
   "/page": "app/page.js",
   "/payment/error/page": "app/payment/error/page.js",
-  "/shopping-cart/page": "app/shopping-cart/page.js"
+  "/payment/success/page": "app/payment/success/page.js",
+  "/register/page": "app/register/page.js",
+  "/shopping-cart/page": "app/shopping-cart/page.js",
+  "/signin/page": "app/signin/page.js"
 }
