@@ -421,7 +421,7 @@ function Checkout() {
                 console.error("Failed to fetch client secret:", error);
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"])({
                     title: "Payment Error!",
-                    description: "Failed to initiate payment process.",
+                    description: "Failed to initiate payment process: " + error.message,
                     variant: "destructive"
                 });
             } finally{
@@ -682,7 +682,7 @@ const PaymentSection = ({ formData, totalPrice, handleChange })=>{
         }
         setPaymentLoading(true);
         try {
-            const { error, paymentIntent } = await stripe.confirmPayment({
+            const { error } = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
                     return_url: `${window.location.origin}/payment/success`,
@@ -695,25 +695,20 @@ const PaymentSection = ({ formData, totalPrice, handleChange })=>{
                             }
                         }
                     }
-                },
-                redirect: "if_required"
+                }
             });
             if (error) {
-                console.error("Payment failed:", error.message);
+                console.error("Payment failed:", error);
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"])({
                     title: "Payment Failed",
-                    description: error.message || "An error occurred during payment.",
+                    description: error.message || "Please select a payment method to pay with.",
                     variant: "destructive"
                 });
                 router.push('/payment/error');
-            } else if (paymentIntent && paymentIntent.status === "succeeded") {
+            } else {
                 // Payment has succeeded
-                console.log("Payment succeeded:", paymentIntent);
                 localStorage.removeItem('cart');
                 router.push('/payment/success');
-            } else {
-                // Handle other possible statuses like requires_action
-                console.log("Payment requires action:", paymentIntent);
             }
         } catch (apiError) {
             console.error("API error during payment:", apiError);
@@ -737,7 +732,7 @@ const PaymentSection = ({ formData, totalPrice, handleChange })=>{
                         children: "Name"
                     }, void 0, false, {
                         fileName: "[project]/src/app/checkout/page.tsx",
-                        lineNumber: 245,
+                        lineNumber: 240,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -749,13 +744,13 @@ const PaymentSection = ({ formData, totalPrice, handleChange })=>{
                         className: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     }, void 0, false, {
                         fileName: "[project]/src/app/checkout/page.tsx",
-                        lineNumber: 246,
+                        lineNumber: 241,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/checkout/page.tsx",
-                lineNumber: 244,
+                lineNumber: 239,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -765,7 +760,7 @@ const PaymentSection = ({ formData, totalPrice, handleChange })=>{
                         children: "Address"
                     }, void 0, false, {
                         fileName: "[project]/src/app/checkout/page.tsx",
-                        lineNumber: 257,
+                        lineNumber: 252,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -777,13 +772,13 @@ const PaymentSection = ({ formData, totalPrice, handleChange })=>{
                         className: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     }, void 0, false, {
                         fileName: "[project]/src/app/checkout/page.tsx",
-                        lineNumber: 258,
+                        lineNumber: 253,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/checkout/page.tsx",
-                lineNumber: 256,
+                lineNumber: 251,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -793,7 +788,7 @@ const PaymentSection = ({ formData, totalPrice, handleChange })=>{
                         children: "Postcode"
                     }, void 0, false, {
                         fileName: "[project]/src/app/checkout/page.tsx",
-                        lineNumber: 269,
+                        lineNumber: 264,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -805,13 +800,13 @@ const PaymentSection = ({ formData, totalPrice, handleChange })=>{
                         className: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     }, void 0, false, {
                         fileName: "[project]/src/app/checkout/page.tsx",
-                        lineNumber: 270,
+                        lineNumber: 265,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/checkout/page.tsx",
-                lineNumber: 268,
+                lineNumber: 263,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -822,7 +817,7 @@ const PaymentSection = ({ formData, totalPrice, handleChange })=>{
                         children: "Payment Details"
                     }, void 0, false, {
                         fileName: "[project]/src/app/checkout/page.tsx",
-                        lineNumber: 281,
+                        lineNumber: 276,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -831,18 +826,18 @@ const PaymentSection = ({ formData, totalPrice, handleChange })=>{
                             id: "payment"
                         }, void 0, false, {
                             fileName: "[project]/src/app/checkout/page.tsx",
-                            lineNumber: 283,
+                            lineNumber: 278,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/checkout/page.tsx",
-                        lineNumber: 282,
+                        lineNumber: 277,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/checkout/page.tsx",
-                lineNumber: 280,
+                lineNumber: 275,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -854,7 +849,7 @@ const PaymentSection = ({ formData, totalPrice, handleChange })=>{
                         children: "Back to Shopping Cart"
                     }, void 0, false, {
                         fileName: "[project]/src/app/checkout/page.tsx",
-                        lineNumber: 288,
+                        lineNumber: 283,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -863,19 +858,19 @@ const PaymentSection = ({ formData, totalPrice, handleChange })=>{
                         children: paymentLoading ? 'Processing...' : 'Pay Now'
                     }, void 0, false, {
                         fileName: "[project]/src/app/checkout/page.tsx",
-                        lineNumber: 291,
+                        lineNumber: 286,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/checkout/page.tsx",
-                lineNumber: 287,
+                lineNumber: 282,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/checkout/page.tsx",
-        lineNumber: 243,
+        lineNumber: 238,
         columnNumber: 5
     }, this);
 };

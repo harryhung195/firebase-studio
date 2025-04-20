@@ -192,10 +192,9 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
     setPaymentLoading(true);
 
     try {
-      const {error} = await stripe.confirmPayment({
+      const {error, paymentIntent} = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${window.location.origin}/payment/success`,
           payment_method_data: {
             billing_details: {
               name: formData.name,
@@ -206,6 +205,7 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
             },
           },
         },
+        redirect: 'if_required'
       });
 
       if (error) {
@@ -216,10 +216,18 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
           variant: "destructive",
         });
         router.push('/payment/error');
-      } else {
+      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
         // Payment has succeeded
         localStorage.removeItem('cart');
-        router.push('/payment/success');
+        window.location.replace('/payment/success'); // Redirect to success page
+      } else {
+        console.error("Unexpected payment state");
+         toast({
+          title: "Payment Error",
+          description: "An unexpected error occurred during payment.",
+          variant: "destructive",
+        });
+        router.push('/payment/error');
       }
     } catch (apiError: any) {
       console.error("API error during payment:", apiError);
