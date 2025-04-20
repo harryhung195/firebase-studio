@@ -133,6 +133,7 @@ function PaymentSuccess() {
             const storedOrderDetails = localStorage.getItem('orderDetails');
             if (storedOrderDetails) {
                 setOrderDetails(JSON.parse(storedOrderDetails));
+                saveOrderToDatabase(JSON.parse(storedOrderDetails)); // Call the function to save to the database
             } else {
                 // If no order details are found, redirect to home
                 router.push('/');
@@ -152,6 +153,28 @@ function PaymentSuccess() {
     }["PaymentSuccess.useEffect"], [
         router
     ]);
+    // Simulate saving data to a database
+    async function saveOrderToDatabase(orderDetails) {
+        try {
+            // Replace this with your actual database saving logic
+            // For example, using an API endpoint to save the data
+            const response = await fetch('/api/save-order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderDetails)
+            });
+            if (!response.ok) {
+                throw new Error(`Failed to save order: ${response.status}`);
+            }
+            const result = await response.json();
+            console.log('Order saved successfully:', result);
+        } catch (error) {
+            console.error('Error saving order:', error);
+        // Handle error appropriately (e.g., show an error message to the user)
+        }
+    }
     if (!orderDetails) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "container mx-auto py-8",
@@ -164,7 +187,7 @@ function PaymentSuccess() {
                         children: "No Order Found!"
                     }, void 0, false, {
                         fileName: "[project]/src/app/payment/success/page.tsx",
-                        lineNumber: 37,
+                        lineNumber: 63,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -172,18 +195,18 @@ function PaymentSuccess() {
                         children: " No order details found. Redirecting to home..."
                     }, void 0, false, {
                         fileName: "[project]/src/app/payment/success/page.tsx",
-                        lineNumber: 38,
+                        lineNumber: 64,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/payment/success/page.tsx",
-                lineNumber: 36,
+                lineNumber: 62,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/payment/success/page.tsx",
-            lineNumber: 35,
+            lineNumber: 61,
             columnNumber: 7
         }, this);
     }
@@ -199,7 +222,7 @@ function PaymentSuccess() {
                         children: "Payment Successful!"
                     }, void 0, false, {
                         fileName: "[project]/src/app/payment/success/page.tsx",
-                        lineNumber: 47,
+                        lineNumber: 73,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -207,13 +230,13 @@ function PaymentSuccess() {
                         children: " Your payment has been processed successfully."
                     }, void 0, false, {
                         fileName: "[project]/src/app/payment/success/page.tsx",
-                        lineNumber: 48,
+                        lineNumber: 74,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/payment/success/page.tsx",
-                lineNumber: 46,
+                lineNumber: 72,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -221,7 +244,7 @@ function PaymentSuccess() {
                 children: "Order Summary"
             }, void 0, false, {
                 fileName: "[project]/src/app/payment/success/page.tsx",
-                lineNumber: 51,
+                lineNumber: 77,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -234,7 +257,7 @@ function PaymentSuccess() {
                                         children: product.name
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/payment/success/page.tsx",
-                                        lineNumber: 57,
+                                        lineNumber: 83,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
@@ -244,13 +267,13 @@ function PaymentSuccess() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/payment/success/page.tsx",
-                                        lineNumber: 58,
+                                        lineNumber: 84,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/payment/success/page.tsx",
-                                lineNumber: 56,
+                                lineNumber: 82,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -261,7 +284,7 @@ function PaymentSuccess() {
                                         className: "w-full h-32 object-cover mb-4 rounded-md"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/payment/success/page.tsx",
-                                        lineNumber: 61,
+                                        lineNumber: 87,
                                         columnNumber: 19
                                     }, this),
                                     product.sku && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -271,7 +294,7 @@ function PaymentSuccess() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/payment/success/page.tsx",
-                                        lineNumber: 66,
+                                        lineNumber: 92,
                                         columnNumber: 35
                                     }, this),
                                     product.attributes && Object.entries(product.attributes).map(([key, value])=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -282,7 +305,7 @@ function PaymentSuccess() {
                                             ]
                                         }, key, true, {
                                             fileName: "[project]/src/app/payment/success/page.tsx",
-                                            lineNumber: 69,
+                                            lineNumber: 95,
                                             columnNumber: 23
                                         }, this)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -295,7 +318,7 @@ function PaymentSuccess() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/payment/success/page.tsx",
-                                                lineNumber: 74,
+                                                lineNumber: 100,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -305,30 +328,30 @@ function PaymentSuccess() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/payment/success/page.tsx",
-                                                lineNumber: 75,
+                                                lineNumber: 101,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/payment/success/page.tsx",
-                                        lineNumber: 73,
+                                        lineNumber: 99,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/payment/success/page.tsx",
-                                lineNumber: 60,
+                                lineNumber: 86,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, product.id || index, true, {
                         fileName: "[project]/src/app/payment/success/page.tsx",
-                        lineNumber: 55,
+                        lineNumber: 81,
                         columnNumber: 15
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/app/payment/success/page.tsx",
-                lineNumber: 53,
+                lineNumber: 79,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -340,7 +363,7 @@ function PaymentSuccess() {
                                 children: "User ID:"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/payment/success/page.tsx",
-                                lineNumber: 83,
+                                lineNumber: 109,
                                 columnNumber: 12
                             }, this),
                             " ",
@@ -348,7 +371,7 @@ function PaymentSuccess() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/payment/success/page.tsx",
-                        lineNumber: 83,
+                        lineNumber: 109,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -357,7 +380,7 @@ function PaymentSuccess() {
                                 children: "Email:"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/payment/success/page.tsx",
-                                lineNumber: 84,
+                                lineNumber: 110,
                                 columnNumber: 12
                             }, this),
                             " ",
@@ -365,7 +388,7 @@ function PaymentSuccess() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/payment/success/page.tsx",
-                        lineNumber: 84,
+                        lineNumber: 110,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -374,7 +397,7 @@ function PaymentSuccess() {
                                 children: "Total Amount:"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/payment/success/page.tsx",
-                                lineNumber: 85,
+                                lineNumber: 111,
                                 columnNumber: 12
                             }, this),
                             " $",
@@ -382,7 +405,7 @@ function PaymentSuccess() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/payment/success/page.tsx",
-                        lineNumber: 85,
+                        lineNumber: 111,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -391,7 +414,7 @@ function PaymentSuccess() {
                                 children: "Payment ID:"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/payment/success/page.tsx",
-                                lineNumber: 86,
+                                lineNumber: 112,
                                 columnNumber: 12
                             }, this),
                             " ",
@@ -399,7 +422,7 @@ function PaymentSuccess() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/payment/success/page.tsx",
-                        lineNumber: 86,
+                        lineNumber: 112,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -408,7 +431,7 @@ function PaymentSuccess() {
                                 children: "Order Status:"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/payment/success/page.tsx",
-                                lineNumber: 87,
+                                lineNumber: 113,
                                 columnNumber: 12
                             }, this),
                             " ",
@@ -416,13 +439,13 @@ function PaymentSuccess() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/payment/success/page.tsx",
-                        lineNumber: 87,
+                        lineNumber: 113,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/payment/success/page.tsx",
-                lineNumber: 82,
+                lineNumber: 108,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -432,18 +455,18 @@ function PaymentSuccess() {
                     children: "Back to Home"
                 }, void 0, false, {
                     fileName: "[project]/src/app/payment/success/page.tsx",
-                    lineNumber: 91,
+                    lineNumber: 117,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/payment/success/page.tsx",
-                lineNumber: 90,
+                lineNumber: 116,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/payment/success/page.tsx",
-        lineNumber: 45,
+        lineNumber: 71,
         columnNumber: 5
     }, this);
 }

@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
+import {saveOrder} from '@/services/order-service';
+import {toast} from '@/hooks/use-toast';
 
 export default function PaymentSuccess() {
   const router = useRouter();
@@ -14,7 +16,22 @@ export default function PaymentSuccess() {
     const storedOrderDetails = localStorage.getItem('orderDetails');
     if (storedOrderDetails) {
       setOrderDetails(JSON.parse(storedOrderDetails));
-      saveOrderToDatabase(JSON.parse(storedOrderDetails)); // Call the function to save to the database
+      saveOrderToDatabase(JSON.parse(storedOrderDetails))
+        .then(() => {
+          // Optionally, show success message
+          toast({
+            title: "Order Saved!",
+            description: "Order details have been saved successfully.",
+          });
+        })
+        .catch((error) => {
+          // Optionally, show error message
+          toast({
+            title: "Error Saving Order!",
+            description: "Failed to save order details: " + error.message,
+            variant: "destructive",
+          });
+        }); // Call the function to save to the database
     } else {
       // If no order details are found, redirect to home
       router.push('/');
@@ -31,30 +48,17 @@ export default function PaymentSuccess() {
     return () => clearTimeout(timeoutId); // Cleanup timeout on unmount
   }, [router]);
 
-  // Simulate saving data to a database
-async function saveOrderToDatabase(orderDetails: any) {
-  try {
-    // Replace this with your actual database saving logic
-    // For example, using an API endpoint to save the data
-    const response = await fetch('/api/save-order', { // Replace with your API endpoint
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(orderDetails),
-    });
 
-    if (!response.ok) {
-      throw new Error(`Failed to save order: ${response.status}`);
-    }
-
-    const result = await response.json();
-    console.log('Order saved successfully:', result);
-  } catch (error: any) {
-    console.error('Error saving order:', error);
-    // Handle error appropriately (e.g., show an error message to the user)
+  async function saveOrderToDatabase(orderDetails: any) {
+      try {
+        const result = await saveOrder(orderDetails);
+        console.log('Order saved successfully:', result);
+        return result;
+      } catch (error: any) {
+        console.error('Error saving order:', error);
+        throw error;
+      }
   }
-}
 
   if (!orderDetails) {
     return (
@@ -119,4 +123,3 @@ async function saveOrderToDatabase(orderDetails: any) {
     </div>
   );
 }
-
