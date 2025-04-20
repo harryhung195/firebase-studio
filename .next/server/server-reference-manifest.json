@@ -1,17 +1,5 @@
 {
-  "node": {
-    "4059865e805a9c331db561fcd115f2aa799478cb67": {
-      "workers": {
-        "app/checkout/page": {
-          "moduleId": "[project]/.next-internal/server/app/checkout/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/services/stripe-service.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/checkout/page": "action-browser"
-      }
-    }
-  },
+  "node": {},
   "edge": {},
   "encryptionKey": "TJ5CS57xNOR+oq+BSomWGZJozPPKa0T6OjtTQ3DdxBc="
 }
