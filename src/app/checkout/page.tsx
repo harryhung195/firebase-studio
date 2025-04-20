@@ -1,37 +1,82 @@
 'use client';
 
-import {useState, useEffect} from 'react';
-import {Button} from '@/components/ui/button';
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import {Input} from '@/components/ui/input';
+
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { toast } from '@/hooks/use-toast';
 
 export default function Checkout() {
   const [cart, setCart] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    address: '',
+    postcode: '',
+    cardNumber: '',
+  });
+
   const router = useRouter();
 
   useEffect(() => {
-    // Load cart data from local storage on component mount
     const storedCart = localStorage.getItem('cart');
     if (storedCart) {
       setCart(JSON.parse(storedCart));
     }
   }, []);
 
-  const calculateTotalPrice = () => {
-    return cart.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0);
+  const totalPrice = useMemo(() => {
+    return cart.reduce(
+      (total, item) => total + (item.price * (item.quantity || 1)), 0
+    );
+  }, [cart]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
   };
 
-  const totalPrice = calculateTotalPrice();
+  const handlePayment = () => {
+    const { name, address, postcode, cardNumber } = formData;
+
+    if (!name || !address || !postcode || !cardNumber) {
+        toast({
+            title: "Error!",
+            description: "Please fill in all fields before proceeding to payment."
+        });
+      return;
+    }
+
+    if (cart.length === 0) {
+         toast({
+            title: "Error!",
+            description: "Your cart is empty. Add items before checking out."
+        });
+      router.push('/');
+      return;
+    }
+
+    setLoading(true);
+    // Simulating payment processing
+    setTimeout(() => {
+      setLoading(false);
+      router.push('/payment/success');
+    }, 1000);
+  };
 
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-4">Checkout</h1>
+
       {cart.length === 0 ? (
         <p>Your shopping cart is currently empty.</p>
       ) : (
-        <div>
-          <h2 className="text-xl font-bold mb-4">Summary of Items:</h2>
+        <>
+          <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {cart.map((product, index) => (
               <Card key={product.id || index}>
@@ -45,57 +90,98 @@ export default function Checkout() {
                     alt={product.name}
                     className="w-full h-32 object-cover mb-4 rounded-md"
                   />
-                  <p>SKU: {product.sku}</p>
-                  {product.attributes.color && <p>Color: {product.attributes.color}</p>}
-                  {product.attributes.size && <p>Size: {product.attributes.size}</p>}
-                  {product.attributes.type && <p>Type: {product.attributes.type}</p>}
-                  {product.attributes.colors && <p>Colors: {product.attributes.colors}</p>}
-                  {product.attributes.design && <p>Design: {product.attributes.design}</p>}
-                  {product.attributes.power && <p>Power: {product.attributes.power}</p>}
-                  {product.attributes.speed && <p>Speed: {product.attributes.speed}</p>}
-                  {product.attributes.brushes && <p>Brushes: {product.attributes.brushes}</p>}
-                  {product.attributes.material && <p>Material: {product.attributes.material}</p>}
-                  {product.attributes.odor && <p>Odor: {product.attributes.odor}</p>}
-                  {product.attributes.quantity && <p>Quantity: {product.attributes.quantity}</p>}
-                  {product.attributes.tools && <p>Tools: {product.attributes.tools}</p>}
-                   <div className="flex items-center space-x-2 mb-4">
-                    <span>Quantity: {product.quantity || 1}</span>
+                  {product.sku && <p>SKU: {product.sku}</p>}
+                  {product.attributes &&
+                    Object.entries(product.attributes).map(([key, value]) => (
+                      <p key={key}>
+                        {key.charAt(0).toUpperCase() + key.slice(1)}: {value}
+                      </p>
+                    ))}
+                   <div className="flex items-center space-x-2 mt-2">
+                    <span>Qty: {product.quantity || 1}</span>
+                    <span>Price: ${(product.price * (product.quantity || 1)).toFixed(2)}</span>
                   </div>
                 </CardContent>
               </Card>
             ))}
-             <div className="col-span-1 md:col-span-2 lg:col-span-3 mt-4">
+
+            {/* Total Price Card */}
+            <div className="col-span-1 md:col-span-2 lg:col-span-3 mt-4">
               <Card>
-                <CardContent className="text-lg font-bold">Total Price: ${totalPrice.toFixed(2)}</CardContent>
+                <CardContent className="text-lg font-bold py-4">
+                  Total Price: ${totalPrice.toFixed(2)}
+                </CardContent>
               </Card>
             </div>
           </div>
 
-            <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-                <Input type="text" id="name" placeholder="Enter your name" className="mt-1" />
-            </div>
+          {/* Form Fields */}
+          <Card className="mt-8">
+            <CardHeader>
+              <CardTitle>Shipping Information</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="name">Name</Label>
+                  <Input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="mt-1"
+                  />
+                </div>
 
-            <div className="mb-4">
-                <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
-                <Input type="text" id="address" placeholder="Enter your address" className="mt-1" />
-            </div>
+                <div>
+                  <Label htmlFor="address">Address</Label>
+                  <Input
+                    type="text"
+                    id="address"
+                    placeholder="Enter your address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    className="mt-1"
+                  />
+                </div>
 
-            <div className="mb-4">
-                <label htmlFor="postcode" className="block text-sm font-medium text-gray-700">Postcode</label>
-                <Input type="text" id="postcode" placeholder="Enter your postcode" className="mt-1" />
-            </div>
+                <div>
+                  <Label htmlFor="postcode">Postcode</Label>
+                  <Input
+                    type="text"
+                    id="postcode"
+                    placeholder="Enter your postcode"
+                    value={formData.postcode}
+                    onChange={handleChange}
+                    className="mt-1"
+                  />
+                </div>
 
-            <div className="mb-4">
-                <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700">Card Number</label>
-                <Input type="text" id="cardNumber" placeholder="Enter your card number" className="mt-1" />
-            </div>
+                <div>
+                  <Label htmlFor="cardNumber">Card Number</Label>
+                  <Input
+                    type="text"
+                    id="cardNumber"
+                    placeholder="Enter your card number"
+                    value={formData.cardNumber}
+                    onChange={handleChange}
+                    className="mt-1"
+                  />
+                </div>
 
-           <div className="flex justify-between mt-4">
-            <Button onClick={() => router.push('/shopping-cart')}>Back to Shopping Cart</Button>
-            <Button  onClick={() => router.push('/payment')}>Pay Now</Button>
-          </div>
-        </div>
+                <div className="col-span-full flex justify-between mt-6">
+                  <Button variant="outline" onClick={() => router.push('/shopping-cart')}>
+                    Back to Shopping Cart
+                  </Button>
+                  <Button onClick={handlePayment} disabled={loading}>
+                    {loading ? 'Processing...' : 'Pay Now'}
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </>
       )}
     </div>
   );
