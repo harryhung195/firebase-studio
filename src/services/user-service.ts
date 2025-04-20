@@ -3,11 +3,16 @@ import { RegisterUser, User } from '@/types';
 const baseUrl = '/api/users';
 
 export async function getUsers(): Promise<User[]> {
-  const response = await fetch(baseUrl);
-  if (!response.ok) {
+  try {
+    const response = await fetch(baseUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch users: ${response.status}`);
+    }
+    return await response.json() as User[];
+  } catch (error) {
+    console.error('Error fetching users:', error);
     throw new Error('Failed to fetch users');
   }
-  return await response.json() as User[];
 }
 
 export async function createUser(user: Omit<User, 'id'>): Promise<User> {
@@ -19,7 +24,7 @@ export async function createUser(user: Omit<User, 'id'>): Promise<User> {
     body: JSON.stringify(user),
   });
   if (!response.ok) {
-    throw new Error('Failed to create user');
+    throw new Error(`Failed to create user: ${response.status}`);
   }
   return await response.json() as User;
 }
@@ -38,17 +43,22 @@ export async function updateUser(user: User): Promise<User> {
       body: JSON.stringify(user),
     });
     if (!response.ok) {
-      throw new Error('Failed to update user');
+      throw new Error(`Failed to update user: ${response.status}`);
     }
     return await response.json() as User;
   }
 
   export async function deleteUser(id: string): Promise<void> {
-    const response = await fetch(`${baseUrl}/${id}`, {
-      method: 'DELETE',
-    });
-    if (!response.ok) {
-      throw new Error('Failed to delete user');
+     try {
+        const response = await fetch(`/api/users?id=${id}`, { // Corrected URL here
+            method: 'DELETE',
+        });
+        if (!response.ok) {
+            throw new Error(`Failed to delete user: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        throw new Error('Failed to delete user');
     }
   }
 
