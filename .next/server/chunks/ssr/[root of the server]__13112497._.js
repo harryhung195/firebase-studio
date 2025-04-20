@@ -53,8 +53,8 @@ module.exports = mod;
 
 var { g: global, __dirname } = __turbopack_context__;
 {
-/* __next_internal_action_entry_do_not_use__ {"7fdc7d8293daa3ee8d98dd58571f8fc4b610317dbd":"StripeService"} */ __turbopack_context__.s({
-    "StripeService": (()=>StripeService)
+/* __next_internal_action_entry_do_not_use__ {"4059865e805a9c331db561fcd115f2aa799478cb67":"createPaymentIntent"} */ __turbopack_context__.s({
+    "createPaymentIntent": (()=>createPaymentIntent)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/server-reference.js [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$app$2d$render$2f$encryption$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/app-render/encryption.js [app-rsc] (ecmascript)");
@@ -66,28 +66,26 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 const stripe = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$stripe$2f$esm$2f$stripe$2e$esm$2e$node$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"](process.env.STRIPE_SECRET_KEY, {
     apiVersion: '2023-10-16'
 });
-const /*#__TURBOPACK_DISABLE_EXPORT_MERGING__*/ StripeService = {
-    createPaymentIntent: async (amount)=>{
-        try {
-            const paymentIntent = await stripe.paymentIntents.create({
-                amount: Math.round(amount * 100),
-                currency: 'USD',
-                automatic_payment_methods: {
-                    enabled: true
-                }
-            });
-            return paymentIntent.client_secret;
-        } catch (error) {
-            console.error("Failed to create Payment Intent:", error);
-            throw new Error(error.message);
-        }
+async function /*#__TURBOPACK_DISABLE_EXPORT_MERGING__*/ createPaymentIntent(amount) {
+    try {
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: Math.round(amount * 100),
+            currency: 'USD',
+            automatic_payment_methods: {
+                enabled: true
+            }
+        });
+        return paymentIntent.client_secret;
+    } catch (error) {
+        console.error("Failed to create Payment Intent:", error);
+        throw new Error(error.message);
     }
-};
+}
 ;
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$validate$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ensureServerEntryExports"])([
-    StripeService
+    createPaymentIntent
 ]);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(StripeService, "7fdc7d8293daa3ee8d98dd58571f8fc4b610317dbd", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(createPaymentIntent, "4059865e805a9c331db561fcd115f2aa799478cb67", null);
 }}),
 "[project]/.next-internal/server/app/checkout/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/services/stripe-service.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript) <locals>": ((__turbopack_context__) => {
 "use strict";
@@ -112,7 +110,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server
 var { g: global, __dirname } = __turbopack_context__;
 {
 __turbopack_context__.s({
-    "7fdc7d8293daa3ee8d98dd58571f8fc4b610317dbd": (()=>__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$stripe$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["StripeService"])
+    "4059865e805a9c331db561fcd115f2aa799478cb67": (()=>__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$stripe$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createPaymentIntent"])
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$stripe$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/services/stripe-service.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$checkout$2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$src$2f$services$2f$stripe$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i('[project]/.next-internal/server/app/checkout/page/actions.js { ACTIONS_MODULE0 => "[project]/src/services/stripe-service.ts [app-rsc] (ecmascript)" } [app-rsc] (server actions loader, ecmascript) <locals>');
@@ -123,7 +121,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server
 var { g: global, __dirname } = __turbopack_context__;
 {
 __turbopack_context__.s({
-    "7fdc7d8293daa3ee8d98dd58571f8fc4b610317dbd": (()=>__TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$checkout$2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$src$2f$services$2f$stripe$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$exports$3e$__["7fdc7d8293daa3ee8d98dd58571f8fc4b610317dbd"])
+    "4059865e805a9c331db561fcd115f2aa799478cb67": (()=>__TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$checkout$2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$src$2f$services$2f$stripe$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$exports$3e$__["4059865e805a9c331db561fcd115f2aa799478cb67"])
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$checkout$2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$src$2f$services$2f$stripe$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$module__evaluation$3e$__ = __turbopack_context__.i('[project]/.next-internal/server/app/checkout/page/actions.js { ACTIONS_MODULE0 => "[project]/src/services/stripe-service.ts [app-rsc] (ecmascript)" } [app-rsc] (server actions loader, ecmascript) <module evaluation>');
 var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$checkout$2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$src$2f$services$2f$stripe$2d$service$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$exports$3e$__ = __turbopack_context__.i('[project]/.next-internal/server/app/checkout/page/actions.js { ACTIONS_MODULE0 => "[project]/src/services/stripe-service.ts [app-rsc] (ecmascript)" } [app-rsc] (server actions loader, ecmascript) <exports>');

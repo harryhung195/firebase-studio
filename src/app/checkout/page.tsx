@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, PaymentElement } from '@stripe/react-stripe-js';
+import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -68,83 +68,6 @@ export default function Checkout() {
     setFormData(prev => ({ ...prev, [id]: value }));
   };
 
-  const handlePayment = async () => {
-    const { name, address, postcode } = formData;
-
-    if (!name || !address || !postcode) {
-      toast({
-        title: "Error!",
-        description: "Please fill in all shipping information fields.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (cart.length === 0) {
-      toast({
-        title: "Error!",
-        description: "Your cart is empty. Add items before checking out.",
-        variant: "destructive",
-      });
-      router.push('/');
-      return;
-    }
-
-    if (!stripePromise || !stripeClientSecret) {
-      toast({
-        title: "Payment Unavailable",
-        description: "Stripe is not ready. Please try again in a few minutes.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setPaymentLoading(true);
-    try {
-      const stripe = await stripePromise;
-
-      const { error } = await stripe!.confirmPayment({
-        elements: stripe!.elements(),
-        confirmParams: {
-          return_url: `${window.location.origin}/payment/success`, // Ensure this URL is correctly configured
-          payment_method_data: {
-            billing_details: {
-              name: formData.name,
-              address: {
-                line1: formData.address,
-                postal_code: formData.postcode,
-              },
-            },
-          },
-        },
-        redirect: "if_required",
-      });
-
-      if (error) {
-        console.error("Payment failed:", error.message);
-        toast({
-          title: "Payment Failed",
-          description: error.message || "An error occurred during payment.",
-          variant: "destructive",
-        });
-        router.push('/payment/error');
-      } else {
-        // Payment has either succeeded or redirection is required
-        console.log("Payment flow initiated, waiting for completion or redirection.");
-      }
-    } catch (apiError: any) {
-      console.error("API error during payment:", apiError);
-      toast({
-        title: "Payment Error",
-        description: apiError.message || "Failed to connect to the payment gateway.",
-        variant: "destructive",
-      });
-      router.push('/payment/error');
-    } finally {
-      setPaymentLoading(false);
-    }
-  };
-
   const appearance = {
     theme: 'stripe',
   };
@@ -204,9 +127,8 @@ export default function Checkout() {
                 <Elements stripe={stripePromise} options={options}>
                   <PaymentSection
                     formData={formData}
+                    totalPrice={totalPrice}
                     handleChange={handleChange}
-                    handlePayment={handlePayment}
-                    paymentLoading={paymentLoading}
                   />
                 </Elements>
               ) : (
@@ -222,18 +144,94 @@ export default function Checkout() {
 
 interface PaymentSectionProps {
   formData: { name: string; address: string; postcode: string };
+  totalPrice: number;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handlePayment: () => Promise<void>;
-  paymentLoading: boolean;
 }
 
 const PaymentSection: React.FC<PaymentSectionProps> = ({
   formData,
+  totalPrice,
   handleChange,
-  handlePayment,
-  paymentLoading,
 }) => {
   const router = useRouter();
+  const stripe = useStripe();
+  const elements = useElements();
+  const [paymentLoading, setPaymentLoading] = useState(false);
+
+  const handlePayment = async () => {
+    const { name, address, postcode } = formData;
+
+    if (!name || !address || !postcode) {
+      toast({
+        title: "Error!",
+        description: "Please fill in all shipping information fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!stripe || !elements) {
+      toast({
+        title: "Payment Unavailable",
+        description: "Stripe could not be loaded. Please try again in a few minutes.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (totalPrice === 0) {
+      toast({
+        title: "Error!",
+        description: "Your cart is empty. Add items before checking out.",
+        variant: "destructive",
+      });
+      router.push('/');
+      return;
+    }
+
+    setPaymentLoading(true);
+
+    try {
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/payment/success`,
+          payment_method_data: {
+            billing_details: {
+              name: formData.name,
+              address: {
+                line1: formData.address,
+                postal_code: formData.postcode,
+              },
+            },
+          },
+        },
+      });
+
+      if (error) {
+        console.error("Payment failed:", error.message);
+        toast({
+          title: "Payment Failed",
+          description: error.message || "An error occurred during payment.",
+          variant: "destructive",
+        });
+        router.push('/payment/error');
+      } else {
+        // Payment has either succeeded or redirection is required
+        console.log("Payment flow initiated, waiting for completion or redirection.");
+      }
+    } catch (apiError: any) {
+      console.error("API error during payment:", apiError);
+      toast({
+        title: "Payment Error",
+        description: apiError.message || "Failed to connect to the payment gateway.",
+        variant: "destructive",
+      });
+      router.push('/payment/error');
+    } finally {
+      setPaymentLoading(false);
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -284,7 +282,7 @@ const PaymentSection: React.FC<PaymentSectionProps> = ({
         <Button variant="outline" onClick={() => router.push('/shopping-cart')}>
           Back to Shopping Cart
         </Button>
-        <Button onClick={handlePayment} disabled={paymentLoading}>
+        <Button onClick={handlePayment} disabled={paymentLoading || !stripe || !elements}>
           {paymentLoading ? 'Processing...' : 'Pay Now'}
         </Button>
       </div>
