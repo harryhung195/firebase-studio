@@ -4,18 +4,27 @@ import {useState, useEffect} from 'react';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Navbar from '@/app/components/Navbar';
 
 export default function ShoppingCart() {
   const [cart, setCart] = useState<any[]>([]);
   const router = useRouter();
+   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     // Load cart data from local storage on component mount
     const storedCart = localStorage.getItem('cart');
     if (storedCart) {
       setCart(JSON.parse(storedCart));
+       setCartCount(JSON.parse(storedCart).length);
     }
   }, []);
+
+    useEffect(() => {
+    // Update cart count whenever the cart changes
+    setCartCount(cart.length);
+  }, [cart]);
 
   const updateCartInLocalStorage = (updatedCart: any[]) => {
     localStorage.setItem('cart', JSON.stringify(updatedCart));
@@ -61,6 +70,8 @@ export default function ShoppingCart() {
 
 
   return (
+    <div>
+         <Navbar cartCount={cartCount} />
     <div className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
       {cart.length === 0 ? (
@@ -108,8 +119,11 @@ export default function ShoppingCart() {
             Total Price: ${totalPrice.toFixed(2)}
           </div>
           <Button onClick={() => router.push('/checkout')}>Checkout</Button>
+           <Link href="/">Continue Shopping</Link>
         </div>
       )}
     </div>
+     </div>
   );
 }
+

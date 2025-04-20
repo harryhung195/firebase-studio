@@ -185,14 +185,14 @@ function ShoppingCart() {
                 children: "Shopping Cart"
             }, void 0, false, {
                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                lineNumber: 65,
+                lineNumber: 66,
                 columnNumber: 7
             }, this),
             cart.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                 children: "Your shopping cart is currently empty."
             }, void 0, false, {
                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                lineNumber: 67,
+                lineNumber: 68,
                 columnNumber: 9
             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 children: [
@@ -206,7 +206,7 @@ function ShoppingCart() {
                                                 children: product.name
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 74,
+                                                lineNumber: 75,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
@@ -216,13 +216,13 @@ function ShoppingCart() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 75,
+                                                lineNumber: 76,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                        lineNumber: 73,
+                                        lineNumber: 74,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -233,7 +233,7 @@ function ShoppingCart() {
                                                 className: "w-full h-32 object-cover mb-4 rounded-md"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 78,
+                                                lineNumber: 79,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -243,7 +243,7 @@ function ShoppingCart() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 83,
+                                                lineNumber: 84,
                                                 columnNumber: 19
                                             }, this),
                                             product.attributes.color && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -253,7 +253,7 @@ function ShoppingCart() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 84,
+                                                lineNumber: 85,
                                                 columnNumber: 48
                                             }, this),
                                             product.attributes.size && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -263,7 +263,7 @@ function ShoppingCart() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 85,
+                                                lineNumber: 86,
                                                 columnNumber: 47
                                             }, this),
                                             product.attributes.type && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -273,7 +273,7 @@ function ShoppingCart() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 86,
+                                                lineNumber: 87,
                                                 columnNumber: 47
                                             }, this),
                                             product.attributes.colors && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -283,7 +283,7 @@ function ShoppingCart() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 87,
+                                                lineNumber: 88,
                                                 columnNumber: 49
                                             }, this),
                                             product.attributes.design && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -293,7 +293,7 @@ function ShoppingCart() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 88,
+                                                lineNumber: 89,
                                                 columnNumber: 49
                                             }, this),
                                             product.attributes.power && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -303,7 +303,7 @@ function ShoppingCart() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 89,
+                                                lineNumber: 90,
                                                 columnNumber: 48
                                             }, this),
                                             product.attributes.speed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -313,7 +313,7 @@ function ShoppingCart() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 90,
+                                                lineNumber: 91,
                                                 columnNumber: 48
                                             }, this),
                                             product.attributes.brushes && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -323,7 +323,7 @@ function ShoppingCart() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 91,
+                                                lineNumber: 92,
                                                 columnNumber: 50
                                             }, this),
                                             product.attributes.material && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -333,7 +333,7 @@ function ShoppingCart() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 92,
+                                                lineNumber: 93,
                                                 columnNumber: 51
                                             }, this),
                                             product.attributes.odor && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -343,7 +343,7 @@ function ShoppingCart() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 93,
+                                                lineNumber: 94,
                                                 columnNumber: 47
                                             }, this),
                                             product.attributes.quantity && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -353,7 +353,7 @@ function ShoppingCart() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 94,
+                                                lineNumber: 95,
                                                 columnNumber: 51
                                             }, this),
                                             product.attributes.tools && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -363,7 +363,7 @@ function ShoppingCart() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 95,
+                                                lineNumber: 96,
                                                 columnNumber: 48
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -375,7 +375,7 @@ function ShoppingCart() {
                                                         children: "-"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                        lineNumber: 97,
+                                                        lineNumber: 98,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -385,7 +385,7 @@ function ShoppingCart() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                        lineNumber: 98,
+                                                        lineNumber: 99,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -394,13 +394,13 @@ function ShoppingCart() {
                                                         children: "+"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                        lineNumber: 99,
+                                                        lineNumber: 100,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 96,
+                                                lineNumber: 97,
                                                 columnNumber: 20
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -408,24 +408,24 @@ function ShoppingCart() {
                                                 children: "Remove from Cart"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                                lineNumber: 101,
+                                                lineNumber: 102,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                        lineNumber: 77,
+                                        lineNumber: 78,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, product.id || index, true, {
                                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                                lineNumber: 72,
+                                lineNumber: 73,
                                 columnNumber: 15
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/app/shopping-cart/page.tsx",
-                        lineNumber: 70,
+                        lineNumber: 71,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -436,7 +436,7 @@ function ShoppingCart() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/shopping-cart/page.tsx",
-                        lineNumber: 107,
+                        lineNumber: 108,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -444,19 +444,19 @@ function ShoppingCart() {
                         children: "Checkout"
                     }, void 0, false, {
                         fileName: "[project]/src/app/shopping-cart/page.tsx",
-                        lineNumber: 110,
+                        lineNumber: 111,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/shopping-cart/page.tsx",
-                lineNumber: 69,
+                lineNumber: 70,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/shopping-cart/page.tsx",
-        lineNumber: 64,
+        lineNumber: 65,
         columnNumber: 5
     }, this);
 }
