@@ -6,6 +6,7 @@ import './globals.css';
 import Link from 'next/link';
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
+import Navbar from './components/Navbar';
 import { useState, useEffect } from 'react';
 
 const geistSans = Geist({
@@ -30,9 +31,14 @@ export default function RootLayout({
 }>) {
 
 
+  useEffect(() => {
+   
+  }, []);
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Navbar/>
         {children}
         <footer className="bg-secondary text-secondary-foreground p-8 mt-16">
           <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
