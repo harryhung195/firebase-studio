@@ -3,15 +3,24 @@
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {useState} from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from '@/hooks/use-toast';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle sign-in logic here
-    console.log('Sign In', email, password);
+
+    // Simulate successful sign-in
+    localStorage.setItem('username', email.split('@')[0]);
+    router.push('/');
+    toast({
+          title: "Sign In Successful!",
+          description: "You have successfully signed in.",
+        });
   };
 
   return (

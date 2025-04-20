@@ -1,14 +1,31 @@
-
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import { Input } from "@/components/ui/input";
+import { useEffect, useState } from 'react';
 
 interface NavbarProps {
   cartCount: number;
 }
 
 export default function Navbar({ cartCount }: NavbarProps) {
+  const [username, setUsername] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Load username from local storage on component mount
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
+
+  const handleSignOut = () => {
+    // Remove username from local storage
+    localStorage.removeItem('username');
+    // Update state to remove username
+    setUsername(null);
+  };
+
   return (
     <>
       <nav className="bg-primary text-primary-foreground p-4 shadow-md">
@@ -23,19 +40,28 @@ export default function Navbar({ cartCount }: NavbarProps) {
               +1 (123) 456-7890
             </a>
 
-            <div className="flex items-center space-x-2">
-              <Link href="/signin">
-                <Button variant="secondary" size="sm">
-                  <Icons.user className="mr-2 h-4 w-4" />
-                  Sign In
+            {username ? (
+              <div className="flex items-center space-x-2">
+                <span>Welcome, {username}!</span>
+                <Button variant="secondary" size="sm" onClick={handleSignOut}>
+                  Sign Out
                 </Button>
-              </Link>
-              <Link href="/register">
-                <Button variant="accent" size="sm">
-                  Register
-                </Button>
-              </Link>
-            </div>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-2">
+                <Link href="/signin">
+                  <Button variant="secondary" size="sm">
+                    <Icons.user className="mr-2 h-4 w-4" />
+                    Sign In
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button variant="accent" size="sm">
+                    Register
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </nav>
@@ -62,7 +88,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
 
       <nav className="bg-accent text-accent-foreground p-4 shadow-md">
         <div className="container mx-auto flex items-center justify-around">
-          <Link href="/#categories" className="text-sm">
+          <Link href="/" className="text-sm">
             Home
           </Link>
           <Link href="/postage" className="text-sm">

@@ -4,6 +4,7 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {useState} from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from '@/hooks/use-toast';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -14,8 +15,12 @@ export default function Register() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle registration logic here
-    console.log('Register', name, email, password);
+    localStorage.setItem('username', email.split('@')[0]);
     router.push('/signin');
+    toast({
+          title: "Register Successful!",
+          description: "You have successfully register in.",
+        });
   };
 
   return (
@@ -66,4 +71,3 @@ export default function Register() {
     </div>
   );
 }
-
