@@ -6,7 +6,6 @@ import './globals.css';
 import Link from 'next/link';
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
-import Navbar from './components/Navbar';
 import { useState, useEffect } from 'react';
 
 const geistSans = Geist({
@@ -188,4 +187,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 

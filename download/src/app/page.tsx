@@ -2,7 +2,7 @@
 
 // This is the home page
 
-import Navbar from './components/Navbar';
+import Navbar from '@/app/components/Navbar';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
@@ -199,4 +199,5 @@ export default function Home() {
     </div>
   );
 }
+
 
