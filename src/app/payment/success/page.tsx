@@ -1,11 +1,23 @@
-
 'use client';
 
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { useEffect } from 'react';
 
 export default function PaymentSuccess() {
   const router = useRouter();
+
+  useEffect(() => {
+    // Clear the cart on successful payment
+    localStorage.removeItem('cart');
+
+    // Optionally, delay the redirection slightly to ensure the removal is processed
+    const timeoutId = setTimeout(() => {
+      router.push('/');
+    }, 500);
+
+    return () => clearTimeout(timeoutId); // Cleanup timeout on unmount
+  }, [router]);
 
   return (
     <div className="container mx-auto py-8">

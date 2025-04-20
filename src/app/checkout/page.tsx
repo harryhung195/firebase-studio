@@ -2,21 +2,26 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, PaymentElement } from '@stripe/react-stripe-js';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { StripeService } from '@/services/stripe-service';
 import { toast } from '@/hooks/use-toast';
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 export default function Checkout() {
   const [cart, setCart] = useState<any[]>([]);
+  const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [paymentLoading, setPaymentLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     address: '',
     postcode: '',
-    cardNumber: '',
   });
 
   const router = useRouter();
@@ -34,37 +39,118 @@ export default function Checkout() {
     );
   }, [cart]);
 
+  useEffect(() => {
+    // Fetch client secret on component mount
+    const fetchClientSecret = async () => {
+      setLoading(true);
+      try {
+        const clientSecret = await StripeService.createPaymentIntent(totalPrice);
+        setStripeClientSecret(clientSecret);
+      } catch (error) {
+        console.error("Failed to fetch client secret:", error);
+        toast({
+          title: "Payment Error!",
+          description: "Failed to initiate payment process.",
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (totalPrice > 0) {
+      fetchClientSecret();
+    }
+  }, [totalPrice]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
   };
 
-  const handlePayment = () => {
-    const { name, address, postcode, cardNumber } = formData;
+  const handlePayment = async () => {
+    const { name, address, postcode } = formData;
 
-    if (!name || !address || !postcode || !cardNumber) {
-        toast({
-            title: "Error!",
-            description: "Please fill in all fields before proceeding to payment."
-        });
+    if (!name || !address || !postcode) {
+      toast({
+        title: "Error!",
+        description: "Please fill in all shipping information fields.",
+        variant: "destructive",
+      });
       return;
     }
 
     if (cart.length === 0) {
-         toast({
-            title: "Error!",
-            description: "Your cart is empty. Add items before checking out."
-        });
+      toast({
+        title: "Error!",
+        description: "Your cart is empty. Add items before checking out.",
+        variant: "destructive",
+      });
       router.push('/');
       return;
     }
 
-    setLoading(true);
-    // Simulating payment processing
-    setTimeout(() => {
-      setLoading(false);
-      router.push('/payment/success');
-    }, 1000);
+    if (!stripePromise || !stripeClientSecret) {
+      toast({
+        title: "Payment Unavailable",
+        description: "Stripe is not ready. Please try again in a few minutes.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setPaymentLoading(true);
+    try {
+      const stripe = await stripePromise;
+
+      const { error } = await stripe!.confirmPayment({
+        elements: stripe!.elements(),
+        confirmParams: {
+          return_url: `${window.location.origin}/payment/success`, // Ensure this URL is correctly configured
+          payment_method_data: {
+            billing_details: {
+              name: formData.name,
+              address: {
+                line1: formData.address,
+                postal_code: formData.postcode,
+              },
+            },
+          },
+        },
+        redirect: "if_required",
+      });
+
+      if (error) {
+        console.error("Payment failed:", error.message);
+        toast({
+          title: "Payment Failed",
+          description: error.message || "An error occurred during payment.",
+          variant: "destructive",
+        });
+        router.push('/payment/error');
+      } else {
+        // Payment has either succeeded or redirection is required
+        console.log("Payment flow initiated, waiting for completion or redirection.");
+      }
+    } catch (apiError: any) {
+      console.error("API error during payment:", apiError);
+      toast({
+        title: "Payment Error",
+        description: apiError.message || "Failed to connect to the payment gateway.",
+        variant: "destructive",
+      });
+      router.push('/payment/error');
+    } finally {
+      setPaymentLoading(false);
+    }
+  };
+
+  const appearance = {
+    theme: 'stripe',
+  };
+  const options = {
+    clientSecret: stripeClientSecret,
+    appearance,
   };
 
   return (
@@ -97,88 +183,35 @@ export default function Checkout() {
                         {key.charAt(0).toUpperCase() + key.slice(1)}: {value}
                       </p>
                     ))}
-                   <div className="flex items-center space-x-2 mt-2">
+                  <div className="flex items-center space-x-2 mt-2">
                     <span>Qty: {product.quantity || 1}</span>
                     <span>Price: ${(product.price * (product.quantity || 1)).toFixed(2)}</span>
                   </div>
                 </CardContent>
               </Card>
             ))}
-
-            {/* Total Price Card */}
-            <div className="col-span-1 md:col-span-2 lg:col-span-3 mt-4">
-              <Card>
-                <CardContent className="text-lg font-bold py-4">
-                  Total Price: ${totalPrice.toFixed(2)}
-                </CardContent>
-              </Card>
-            </div>
           </div>
 
-          {/* Form Fields */}
+          {/* Payment Section */}
           <Card className="mt-8">
             <CardHeader>
-              <CardTitle>Shipping Information</CardTitle>
+              <CardTitle>Payment Information</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    type="text"
-                    id="name"
-                    placeholder="Enter your name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="mt-1"
+              {loading ? (
+                <p>Loading payment interface...</p>
+              ) : stripeClientSecret && stripePromise ? (
+                <Elements stripe={stripePromise} options={options}>
+                  <PaymentSection
+                    formData={formData}
+                    handleChange={handleChange}
+                    handlePayment={handlePayment}
+                    paymentLoading={paymentLoading}
                   />
-                </div>
-
-                <div>
-                  <Label htmlFor="address">Address</Label>
-                  <Input
-                    type="text"
-                    id="address"
-                    placeholder="Enter your address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    className="mt-1"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="postcode">Postcode</Label>
-                  <Input
-                    type="text"
-                    id="postcode"
-                    placeholder="Enter your postcode"
-                    value={formData.postcode}
-                    onChange={handleChange}
-                    className="mt-1"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="cardNumber">Card Number</Label>
-                  <Input
-                    type="text"
-                    id="cardNumber"
-                    placeholder="Enter your card number"
-                    value={formData.cardNumber}
-                    onChange={handleChange}
-                    className="mt-1"
-                  />
-                </div>
-
-                <div className="col-span-full flex justify-between mt-6">
-                  <Button variant="outline" onClick={() => router.push('/shopping-cart')}>
-                    Back to Shopping Cart
-                  </Button>
-                  <Button onClick={handlePayment} disabled={loading}>
-                    {loading ? 'Processing...' : 'Pay Now'}
-                  </Button>
-                </div>
-              </div>
+                </Elements>
+              ) : (
+                <p>Payment interface unavailable.</p>
+              )}
             </CardContent>
           </Card>
         </>
@@ -186,3 +219,75 @@ export default function Checkout() {
     </div>
   );
 }
+
+interface PaymentSectionProps {
+  formData: { name: string; address: string; postcode: string };
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handlePayment: () => Promise<void>;
+  paymentLoading: boolean;
+}
+
+const PaymentSection: React.FC<PaymentSectionProps> = ({
+  formData,
+  handleChange,
+  handlePayment,
+  paymentLoading,
+}) => {
+  const router = useRouter();
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <Label htmlFor="name">Name</Label>
+        <input
+          type="text"
+          id="name"
+          placeholder="Enter your name"
+          value={formData.name}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+      </div>
+
+      <div>
+        <Label htmlFor="address">Address</Label>
+        <input
+          type="text"
+          id="address"
+          placeholder="Enter your address"
+          value={formData.address}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+      </div>
+
+      <div>
+        <Label htmlFor="postcode">Postcode</Label>
+        <input
+          type="text"
+          id="postcode"
+          placeholder="Enter your postcode"
+          value={formData.postcode}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+      </div>
+
+      <div className="md:col-span-2">
+        <Label htmlFor="payment">Payment Details</Label>
+        <div className="mt-2">
+          <PaymentElement id="payment" />
+        </div>
+      </div>
+
+      <div className="col-span-full flex justify-between mt-6">
+        <Button variant="outline" onClick={() => router.push('/shopping-cart')}>
+          Back to Shopping Cart
+        </Button>
+        <Button onClick={handlePayment} disabled={paymentLoading}>
+          {paymentLoading ? 'Processing...' : 'Pay Now'}
+        </Button>
+      </div>
+    </div>
+  );
+};
