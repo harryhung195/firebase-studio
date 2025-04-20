@@ -1,4 +1,16 @@
 {
-  "node": {},
+  "node": {
+    "7fdc7d8293daa3ee8d98dd58571f8fc4b610317dbd": {
+      "workers": {
+        "app/checkout/page": {
+          "moduleId": "[project]/.next-internal/server/app/checkout/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/services/stripe-service.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/checkout/page": "action-browser"
+      }
+    }
+  },
   "edge": {}
 }

@@ -64,7 +64,7 @@ const Button = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f
             variant,
             size,
             className
-        })),
+        }), className),
         ref: ref,
         ...props
     }, void 0, false, {

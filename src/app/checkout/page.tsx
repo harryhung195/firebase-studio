@@ -8,7 +8,7 @@ import { Elements, PaymentElement } from '@stripe/react-stripe-js';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { StripeService } from '@/services/stripe-service';
+import { createPaymentIntent } from '@/services/stripe-service';
 import { toast } from '@/hooks/use-toast';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -44,7 +44,7 @@ export default function Checkout() {
     const fetchClientSecret = async () => {
       setLoading(true);
       try {
-        const clientSecret = await StripeService.createPaymentIntent(totalPrice);
+        const clientSecret = await createPaymentIntent(totalPrice);
         setStripeClientSecret(clientSecret);
       } catch (error) {
         console.error("Failed to fetch client secret:", error);
