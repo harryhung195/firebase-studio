@@ -30,15 +30,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
-   
+    // Load cart data from local storage on component mount
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      setCartCount(JSON.parse(storedCart).length);
+    }
   }, []);
 
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Navbar/>
+        
         {children}
         <footer className="bg-secondary text-secondary-foreground p-8 mt-16">
           <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
