@@ -171,11 +171,16 @@ __turbopack_context__.s({
 });
 const baseUrl = '/api/users';
 async function getUsers() {
-    const response = await fetch(baseUrl);
-    if (!response.ok) {
-        throw new Error('Failed to fetch users');
+    try {
+        const response = await fetch(baseUrl);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch users: ${response.statusText}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        throw new Error(`Failed to fetch users: ${error.message}`);
     }
-    return await response.json();
 }
 async function createUser(user) {
     const response = await fetch(baseUrl, {
@@ -186,7 +191,7 @@ async function createUser(user) {
         body: JSON.stringify(user)
     });
     if (!response.ok) {
-        throw new Error('Failed to create user');
+        throw new Error(`Failed to create user: ${response.status}`);
     }
     return await response.json();
 }
@@ -201,6 +206,9 @@ async function registerUser(user) {
             email: user.email
         })
     });
+    if (!response.ok) {
+        throw new Error(`Failed to register users: ${response.statusText}`);
+    }
     return await response.json();
 }
 async function updateUser(user) {
@@ -212,15 +220,20 @@ async function updateUser(user) {
         body: JSON.stringify(user)
     });
     if (!response.ok) {
-        throw new Error('Failed to update user');
+        throw new Error(`Failed to update user: ${response.status}`);
     }
     return await response.json();
 }
 async function deleteUser(id) {
-    const response = await fetch(`${baseUrl}/${id}`, {
-        method: 'DELETE'
-    });
-    if (!response.ok) {
+    try {
+        const response = await fetch(`/api/users?id=${id}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok) {
+            throw new Error(`Failed to delete user: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Error deleting user:', error);
         throw new Error('Failed to delete user');
     }
 }

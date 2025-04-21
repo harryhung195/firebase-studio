@@ -3,7 +3,7 @@
 import {useState, useEffect} from 'react';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
 
 const products = [
@@ -12,7 +12,7 @@ const products = [
   {id: 15, name: 'Bunny Nail Charms', sku: 'EST003', price: 5.99, attributes: {material: 'Acrylic', quantity: '10 charms'}},
 ];
 
-export default function Easter() {
+export default function EasterCategoryPage() {
   const [search, setSearch] = useState('');
   const [filteredProducts, setFilteredProducts] = useState(products);
    const router = useRouter();
@@ -71,7 +71,7 @@ export default function Easter() {
         {filteredProducts.map(product => (
           <Card key={product.id}>
             <CardHeader>
-              <CardTitle>{product.name}</CardTitle>
+              <CardTitle className="truncate">{product.name}</CardTitle>
               <CardDescription>Price: ${product.price}</CardDescription>
             </CardHeader>
             <CardContent>
@@ -81,15 +81,50 @@ export default function Easter() {
                 className="w-full h-32 object-cover mb-4 rounded-md"
               />
               <p>SKU: {product.sku}</p>
-              <p>Colors: {product.attributes.colors}</p>
-              <p>Design: {product.attributes.design}</p>
-              <Button onClick={() => handleAddToCart(product)}>Add to Cart</Button>
+              {product.attributes.colors && <p>Colors: {product.attributes.colors}</p>}
+              {product.attributes.design && <p>Design: {product.attributes.design}</p>}
+            </CardContent>
+            <CardFooter>
+            <AddToCartButton product={product} onAddToCart={handleAddToCart} />
             </CardContent>
           </Card>
         ))}
          <Button onClick={() => router.push('/shopping-cart')}>Go to Shopping Cart</Button>
       </div>
     </div>
+  );
+}
+
+import { Check } from 'lucide-react';
+
+interface AddToCartButtonProps {
+  product: any;
+  onAddToCart: (product: any) => void;
+}
+
+const AddToCartButton: React.FC<AddToCartButtonProps> = ({ product, onAddToCart }) => {
+  const [added, setAdded] = useState(false);
+
+  const handleClick = () => {
+    onAddToCart(product);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000); // Reset after 2 seconds
+  };
+
+  return (
+    <Button
+      onClick={handleClick}
+      className={`w-full transition-all duration-300 ${
+        added ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'
+      }`}
+      disabled={added}
+    >
+      {added ? (
+        <Check className="h-4 w-4 text-white" />
+      ) : (
+        'Add to Cart'
+      )}
+    </Button>
   );
 }
 
